@@ -1,9 +1,9 @@
 @extends('app')
 
 @section('content')
-    <h3>Resultados</h3>
+    <h3>Crear un feed</h3>
     <hr>
-    <form action="/optafeeds" method="POST" id="optaform">
+    <form action="http://data.winsports.co/optafeeds" method="POST" id="optaform">
         {!! csrf_field() !!}
         <div class="form-group row">
             <div class="col-sm-offset-3 col-sm-9">
@@ -21,7 +21,7 @@
         $('#optaform').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
-                url:'/optafeeds',
+                url:'http://data.winsports.co/optafeeds',
                 headers: {
                     'x-meta-feed-type':'1',
                     'x-meta-feed-parameters':'feed params',
