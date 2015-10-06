@@ -1,0 +1,9 @@
+// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+$dayscore-green: #548B0D;
+
+body{
+  padding-top: 5rem;
+}
+.navbar-dayscore{
+  border-bottom: 1px solid $dayscore-green;
+}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["app.scss"],"names":[],"mappings":"AAGA;EACE,kBAAkB,EADf;;AAGL;EACE,iCANsB,EAKP","file":"app.css","sourcesContent":["// @import \"node_modules/bootstrap-sass/assets/stylesheets/bootstrap\";\n$dayscore-green: #548B0D;\n\nbody{\n  padding-top: 5rem;\n}\n.navbar-dayscore{\n  border-bottom: 1px solid $dayscore-green;\n}\n"],"sourceRoot":"/source/"}
