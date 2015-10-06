@@ -10,7 +10,8 @@
         "barryvdh/laravel-debugbar": "^2.0",
         "guzzlehttp/guzzle": "^6.1",
         "twbs/bootstrap": "4.0.0-alpha",
-        "components/jquery": "^2.1"
+        "components/jquery": "^2.1",
+        "laravelcollective/html": "^5.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

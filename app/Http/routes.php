@@ -28,3 +28,4 @@ Route::get('dashboard','PagesController@dashboard');
 Route::get('help','PagesController@help');
 
 Route::resource('optafeeds','OptafeedsController');
+Route::resource('users','UsersController');

@@ -3,6 +3,7 @@
 namespace Dayscore\Http\Controllers;
 
 use Dayscore\Optafeed;
+use Dayscore\User;
 use Illuminate\Http\Request;
 use Dayscore\Http\Requests;
 use Dayscore\Http\Controllers\Controller;
@@ -16,8 +17,9 @@ class PagesController extends Controller
 
     public function dashboard()
     {
+        $users = User::all();
         $optafeeds = Optafeed::all();
-        return view('pages.dashboard',compact('optafeeds'));
+        return view('pages.dashboard',compact('optafeeds','users'));
     }
 
     public function help()

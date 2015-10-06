@@ -12,7 +12,14 @@
             <div class="card-block">
                 <h4 class="card-title">Opta Feeds</h4>
                 <p class="card-text">Total: {{ $optafeeds->count() }}</p>
-                <a href="#" class="btn btn-primary">Ver</a>
+                <a href="/optafeeds" class="btn btn-primary">Ver</a>
+            </div>
+        </div>
+        <div class="card col-md-3">
+            <div class="card-block">
+                <h4 class="card-title">Usuarios</h4>
+                <p class="card-text">Total: {{ $users->count() }}</p>
+                <a href="/users" class="btn btn-primary">Ver</a>
             </div>
         </div>
 

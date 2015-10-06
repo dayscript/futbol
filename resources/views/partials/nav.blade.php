@@ -13,6 +13,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/dashboard">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users">Usuarios</a>
+                    </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/help">Ayuda</a>
                 </li>
