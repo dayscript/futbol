@@ -11,10 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('app');
-});
+//Route::get('/', function () {
+//    return view('app');
+//});
 
+Route::get('/','PagesController@dashboard');
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -29,3 +30,4 @@ Route::get('help','PagesController@help');
 
 Route::resource('optafeeds','OptafeedsController');
 Route::resource('users','UsersController');
+Route::resource('fixturetests','FixtureTestsController');

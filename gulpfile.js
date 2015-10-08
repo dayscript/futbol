@@ -18,5 +18,6 @@ var vendor_css = ['../../../vendor/twbs/bootstrap/dist/css/bootstrap.min.css'];
 elixir(function(mix) {
     mix.scripts(vendor_js, 'public/js/vendor.js')
         .styles(vendor_css, 'public/css/vendor.css')
-        .sass('app.scss');
+        .sass('app.scss')
+        .browserSync({proxy:'futbol.dev'});
 });

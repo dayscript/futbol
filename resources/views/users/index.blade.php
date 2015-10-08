@@ -5,10 +5,9 @@
 @stop
 
 @section('content')
-    <h2>Usuarios</h2>
-    <hr>
+    <h2><i class="fa fa-users"></i> Usuarios </h2>
     <a href="/users/create" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Agregar</a>
-    <p>Lista de usuarios creados en el sistema.</p>
+    <small>Lista de usuarios creados en el sistema. <br>&nbsp;</small>
 
     <table class="table table-striped table-hover">
         <thead>
@@ -25,12 +24,16 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->created_at }}</td>
-                <td>
-                    {!! Form::open(array('route' => array('users.destroy', $user->id),'class'=>'delete-user', 'method' => 'delete'))!!}
-                    <input type="submit" class="btn btn-danger btn-sm deleteUser" value="Eliminar">
-                    <a class="btn btn-primary btn-sm" href="/users/{{$user->id}}/edit"><i class="fa fa-pencil-square-o"></i> Editar</a>
-                    {!! Form::close() !!}
-
+                <td>@if(Auth::user()->id != $user->id)
+                        {!! Form::open(array('route' => array('users.destroy', $user->id),'class'=>'delete-user', 'method' => 'delete'))!!}
+                        <input type="submit" class="btn btn-danger btn-sm deleteUser" value="Eliminar">
+                        <a class="btn btn-primary btn-sm" href="/users/{{$user->id}}/edit"><i
+                                    class="fa fa-pencil-square-o"></i> Editar</a>
+                        {!! Form::close() !!}
+                    @else
+                        <a class="btn btn-primary btn-sm" href="/users/{{$user->id}}/edit"><i
+                                    class="fa fa-pencil-square-o"></i> Editar</a>
+                @endif
             </tr>
         @endforeach
         </tbody>
@@ -51,10 +54,11 @@
                         },
                         success: function (data) {
                             if (data.fail) {
-
+                                toastr.error('Error al eliminar el usuario!')
                             } else {
-                                $(".user-"+data.id).slideUp(500, function() {
-                                    $(".user-"+data.id).remove();
+                                toastr.success('Usuario eliminado correctamente!')
+                                $(".user-" + data.id).slideUp(500, function () {
+                                    $(".user-" + data.id).remove();
                                 });
                             }
                         }

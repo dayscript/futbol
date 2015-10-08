@@ -10,26 +10,49 @@
                     <a class="navbar-brand" href="#"><img src="{{ asset('images/logos/dayscore.png') }}" alt="Dayscore"></a>
                 </li>
                 @if(Auth::check())
-                <li class="nav-item active">
-                    <a class="nav-link" href="/dashboard">Dashboard <span class="sr-only">(current)</span></a>
-                </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/users">Usuarios</a>
+                    <li class="nav-item {{(Request::path() == 'dashboard' || Request::path() == '/')?"active":""}}">
+                        <a class="nav-link" href="/dashboard">Dashboard
+                            @if(Request::path() == 'dashboard' || Request::path() == '/')
+                                <span class="sr-only">(current)</span>
+                            @endif
+                        </a>
                     </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/help">Ayuda</a>
-                </li>
+                    <li class="nav-item {{(Request::path() == 'users')?"active":""}}">
+                        <a class="nav-link" href="/users">Usuarios
+                            @if(Request::path() == 'users')
+                                <span class="sr-only">(current)</span>
+                            @endif
+                        </a>
+                    </li>
+                    <li class="nav-item {{(Request::path() == 'fixturetests')?"active":""}}">
+                        <a class="nav-link" href="/fixturetests">Fixtures
+                            @if(Request::path() == 'fixturetests')
+                                <span class="sr-only">(current)</span>
+                            @endif
+                        </a>
+                    </li>
                 @endif
             </ul>
         </div>
         <ul class="nav navbar-nav pull-right">
-            <li class="nav-item">
-                @if(Auth::check())
+            @if(Auth::check())
+                <li class="nav-item">
+                    <a class="nav-link {{(Request::path() == 'help')?"help":""}}" href="/help"><i
+                                class="fa fa-question"></i> Ayuda
+                        @if(Request::path() == 'help')
+                            <span class="sr-only">(current)</span>
+                        @endif
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/auth/logout"><i class="fa fa-sign-out"></i> Salir</a>
-                @else
+                </li>
+
+            @else
+                <li class="nav-item">
                     <a class="nav-link" href="/auth/login"><i class="fa fa-sign-in"></i> Ingresar</a>
-                @endif
-            </li>
+                </li>
+            @endif
         </ul>
     </div>
 </nav>

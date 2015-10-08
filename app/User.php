@@ -2,6 +2,8 @@
 
 namespace Dayscore;
 
+use Dayscore\FixtureTest;
+use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -36,4 +38,46 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * The attributes that should be treated as Carbon dates.
+     *
+     * @var array
+     */
+    protected $dates = ['created_at','updated_at'];
+
+    /**
+     * Format date attribute more human friendly
+     *
+     * @param $date
+     * @return string
+     */
+    public function getCreatedAtAttribute( $date )
+    {
+        Carbon::setLocale('es');
+        return Carbon::parse($date)->diffForHumans();
+    }
+
+    /**
+     * Format date attribute more human friendly
+     *
+     * @param $date
+     * @return string
+     */
+    public function getUpdatedAtAttribute( $date )
+    {
+        Carbon::setLocale('es');
+        return Carbon::parse($date)->diffForHumans();
+    }
+
+    /**
+     * Return all FixtureTests objects associated with this user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function fixtureTests()
+    {
+        return $this->hasMany( 'Dayscore\FixtureTest' );
+    }
+
 }

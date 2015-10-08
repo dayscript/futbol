@@ -2,45 +2,23 @@
 
 namespace Dayscore\Http\Controllers;
 
-use Dayscore\User;
+use Dayscore\FixtureTest;
 use Illuminate\Http\Request;
 use Dayscore\Http\Requests;
 use Dayscore\Http\Controllers\Controller;
 use Kamaln7\Toastr\Facades\Toastr;
 
-class UsersController extends Controller
+class FixtureTestsController extends Controller
 {
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
-    }
-
-    public function __construct()
-    {
-        $this->middleware( 'auth' );
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return view('users.index',compact('users'));
-
+        $fixtures = $request->user()->fixtureTests;
+        return view('fixturetests.index',compact('fixtures'));
     }
 
     /**
@@ -50,7 +28,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('fixturetests.create');
     }
 
     /**
@@ -62,10 +40,9 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $data['password'] = bcrypt($request->get('password'));
-        User::create($data);
-        Toastr::success("Usuario creado correctamente!");
-        return redirect('users');
+        $request->user()->fixtureTests()->create($data);
+        Toastr::success("Fixture creado correctamente!");
+        return redirect('fixturetests');
     }
 
     /**
@@ -85,9 +62,9 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(FixtureTest $fixture)
     {
-        return view('users.edit',compact('user'));
+        return view('fixturetests.edit',compact('fixture'));
     }
 
     /**
@@ -97,14 +74,13 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, FixtureTest $fixture)
     {
         $data = $request->all();
-        if(trim($data['password'])=="")array_pull($data,'password');
-        else $data['password'] = bcrypt($data['password']);
-        $user->update($data);
-        Toastr::success("Usuario actualizado correctamente!");
-        return redirect('users');
+        if(!isset($data['classicsRound']))$data['classicsRound'] = 0;
+        $fixture->update($data);
+        Toastr::success("Fixture actualizado correctamente!");
+        return redirect('fixturetests');
     }
 
     /**
@@ -113,10 +89,10 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(FixtureTest $fixture)
     {
-        $id = $user->id;
-        $user->delete();
+        $id = $fixture->id;
+        $fixture->delete();
         return ['id'=>$id];
     }
 }
