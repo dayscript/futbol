@@ -5,21 +5,21 @@ namespace Dayscore;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class FixtureTest extends Model
+class Tournament extends Model
 {
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['title', 'classicsRound', 'size','user_id'];
+    protected $fillable = ['id','name','opta_id','opta_season'];
 
     /**
      * The attributes that should be treated as Carbon dates.
      *
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = ['created_at','updated_at'];
 
     /**
      * Format date attribute more human friendly
@@ -44,15 +44,4 @@ class FixtureTest extends Model
         Carbon::setLocale('es');
         return Carbon::parse($date)->diffForHumans();
     }
-
-    /**
-     * Return all FixtureTestTeam objects associated with this Fixture
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function teams()
-    {
-        return $this->hasMany( 'Dayscore\FixtureTestTeam' )->orderBy('order','asc');
-    }
-
 }

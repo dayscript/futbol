@@ -27,6 +27,8 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot($router);
         $router->model('users', 'Dayscore\User');
         $router->model('fixturetests', 'Dayscore\FixtureTest');
+        $router->model('optafeeds', 'Dayscore\Optafeed');
+        $router->model('tournaments', 'Dayscore\Tournament');
     }
 
     /**

@@ -12,7 +12,8 @@
         "twbs/bootstrap": "4.0.0-alpha",
         "components/jquery": "^2.1",
         "laravelcollective/html": "^5.1",
-        "oriceon/toastr-5-laravel": "dev-master"
+        "oriceon/toastr-5-laravel": "dev-master",
+        "Nathanmac/Parser": "3.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

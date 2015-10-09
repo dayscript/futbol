@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eca61f49df24735655530ea587e71b46",
-    "content-hash": "2d9e23b1b1dfc2df177549ea2001cfcf",
+    "hash": "31343fb714ac938ad808a4bc4a9b1466",
+    "content-hash": "a156d18de616dec34ca9be5419bc8fca",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1068,6 +1068,61 @@
             "time": "2015-01-11 23:07:46"
         },
         {
+            "name": "nathanmac/parser",
+            "version": "v3.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nathanmac/Parser.git",
+                "reference": "5472cc6bae23b89e9a9764db8ff0dc475b7006e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nathanmac/Parser/zipball/5472cc6bae23b89e9a9764db8ff0dc475b7006e8",
+                "reference": "5472cc6bae23b89e9a9764db8ff0dc475b7006e8",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.3.0",
+                "symfony/yaml": "~2.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.3",
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nathanmac\\Utilities\\Parser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nathan Macnamara",
+                    "email": "hello@nathanmac.com"
+                }
+            ],
+            "description": "Simple PHP Parser Utility Library for API Development",
+            "homepage": "https://github.com/nathanmac/Parser",
+            "keywords": [
+                "api",
+                "json",
+                "parser",
+                "xml"
+            ],
+            "time": "2015-10-03 21:34:42"
+        },
+        {
             "name": "nesbot/carbon",
             "version": "1.20.0",
             "source": {
@@ -2117,6 +2172,55 @@
                 "dump"
             ],
             "time": "2015-09-22 14:41:01"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v2.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "31cb2ad0155c95b88ee55fe12bc7ff92232c1770"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/31cb2ad0155c95b88ee55fe12bc7ff92232c1770",
+                "reference": "31cb2ad0155c95b88ee55fe12bc7ff92232c1770",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-09-14 14:14:09"
         },
         {
             "name": "twbs/bootstrap",
@@ -3255,16 +3359,16 @@
         },
         {
             "name": "sebastian/global-state",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/global-state.git",
-                "reference": "c7428acdb62ece0a45e6306f1ae85e1c05b09c01"
+                "reference": "23af31f402993cfd94e99cbc4b782e9a78eb0e97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/c7428acdb62ece0a45e6306f1ae85e1c05b09c01",
-                "reference": "c7428acdb62ece0a45e6306f1ae85e1c05b09c01",
+                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/23af31f402993cfd94e99cbc4b782e9a78eb0e97",
+                "reference": "23af31f402993cfd94e99cbc4b782e9a78eb0e97",
                 "shasum": ""
             },
             "require": {
@@ -3302,7 +3406,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2014-10-06 09:23:50"
+            "time": "2015-06-21 15:11:22"
         },
         {
             "name": "sebastian/recursion-context",
@@ -3391,55 +3495,6 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2015-06-21 13:59:46"
-        },
-        {
-            "name": "symfony/yaml",
-            "version": "v2.7.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "31cb2ad0155c95b88ee55fe12bc7ff92232c1770"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/31cb2ad0155c95b88ee55fe12bc7ff92232c1770",
-                "reference": "31cb2ad0155c95b88ee55fe12bc7ff92232c1770",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "require-dev": {
-                "symfony/phpunit-bridge": "~2.7"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Yaml\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Yaml Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-09-14 14:14:09"
         }
     ],
     "aliases": [],

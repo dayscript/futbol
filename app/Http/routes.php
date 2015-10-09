@@ -11,9 +11,6 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('app');
-//});
 
 Route::get('/','PagesController@dashboard');
 // Authentication routes...
@@ -31,3 +28,6 @@ Route::get('help','PagesController@help');
 Route::resource('optafeeds','OptafeedsController');
 Route::resource('users','UsersController');
 Route::resource('fixturetests','FixtureTestsController');
+Route::get('fixturetests/{fixturetests}/{option}', 'FixtureTestsController@show');
+Route::resource('tournaments','TournamentsController');
+Route::get('tournaments/sync/{optaid}/{optaseason}', 'TournamentsController@sync');

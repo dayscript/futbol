@@ -27,7 +27,9 @@
                 <td>{{ ($fixture->classicsRound)?"Si":"No" }}</td>
                 <td>{{ $fixture->created_at }}</td>
                 <td>
+
                     {!! Form::open(array('route' => array('fixturetests.destroy', $fixture->id),'class'=>'delete-fixture', 'method' => 'delete'))!!}
+                    <a class="btn btn-info btn-sm" href="/fixturetests/{{$fixture->id}}/teams"><i class="fa fa-futbol-o"></i> Equipos</a>
                     <input type="submit" class="btn btn-danger btn-sm deleteFixture" value="Eliminar">
                     <a class="btn btn-primary btn-sm" href="/fixturetests/{{$fixture->id}}/edit"><i
                                 class="fa fa-pencil-square-o"></i> Editar</a>

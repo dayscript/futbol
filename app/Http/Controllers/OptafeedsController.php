@@ -3,9 +3,11 @@
 namespace Dayscore\Http\Controllers;
 
 use Dayscore\Optafeed;
+use Dayscore\Tournament;
 use Illuminate\Http\Request;
 use Dayscore\Http\Requests;
 use Dayscore\Http\Controllers\Controller;
+use Nathanmac\Utilities\Parser\Facades\Parser;
 
 class OptafeedsController extends Controller
 {
@@ -22,7 +24,7 @@ class OptafeedsController extends Controller
      */
     public function index()
     {
-        $optafeeds = Optafeed::all();
+        $optafeeds = Optafeed::latest()->get();
         return view('optafeeds.index', compact('optafeeds'));
     }
 
@@ -45,7 +47,6 @@ class OptafeedsController extends Controller
     public function store(Request $request)
     {
         $headers = apache_request_headers();
-//        dd($request->input());
         $post_data = file_get_contents('php://input');
         $posts = array(
             'feedType' => isset($headers['x-meta-feed-type']) ? $headers['x-meta-feed-type'] : '',
@@ -85,9 +86,11 @@ class OptafeedsController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Optafeed $optafeed)
     {
-        //
+        $content = Parser::xml($optafeed->content);
+        dd($content["SoccerDocument"]["MatchData"][0]);
+        return view('optafeeds.show',compact('optafeed','content'));
     }
 
     /**
@@ -123,4 +126,5 @@ class OptafeedsController extends Controller
     {
         //
     }
+
 }

@@ -31,6 +31,20 @@
                             @endif
                         </a>
                     </li>
+                    <li class="nav-item {{(Request::path() == 'optafeeds')?"active":""}}">
+                        <a class="nav-link" href="/optafeeds">Feeds Opta
+                            @if(Request::path() == 'optafeeds')
+                                <span class="sr-only">(current)</span>
+                            @endif
+                        </a>
+                    </li>
+                    <li class="nav-item {{(Request::path() == 'tournaments')?"active":""}}">
+                        <a class="nav-link" href="/tournaments">Torneos
+                            @if(Request::path() == 'tournaments')
+                                <span class="sr-only">(current)</span>
+                            @endif
+                        </a>
+                    </li>
                 @endif
             </ul>
         </div>

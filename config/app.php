@@ -147,6 +147,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Kamaln7\Toastr\ToastrServiceProvider::class,
+        Nathanmac\Utilities\Parser\ParserServiceProvider::class,
 
     ],
 
@@ -200,6 +201,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Toastr' => Kamaln7\Toastr\Facades\Toastr::class,
+        'Parser' => Nathanmac\Utilities\Parser\Facades\Parser::class,
 
     ],
 
