@@ -22,12 +22,23 @@
                     <td>{{$feed->gameId}}</td>
                     <td>{{$feed->created_at}}</td>
                     <td>
-                        <a class="btn btn-info btn-sm" href="/optafeeds/{{$feed->id}}"><i class="fa fa-futbol-o"></i> Detalle</a>
-                        <a class="btn btn-info btn-sm" href="/tournaments/sync/{{$feed->competitionId}}/{{$feed->seasonId}}"><i class="fa fa-refresh"></i> Sincronizar</a>
+                        <a class="btn btn-info btn-sm" href="/optafeeds/{{$feed->id}}"><i class="fa fa-futbol-o"></i>
+                            Detalle</a>
+                        <a class="btn btn-info btn-sm"
+                           href="/tournaments/sync/{{$feed->competitionId}}/{{$feed->seasonId}}"><i
+                                    class="fa fa-refresh"></i> Sincronizar</a>
+                        @if($feed->tournament())
+                            <a class="btn btn-info btn-sm" href="/optafeeds/{{$feed->id}}/process"><i
+                                        class="fa fa-floppy-o"></i> Procesar</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach
+            <tr class="table-active">
+                <td colspan="5" class="text-right">{!! $optafeeds->render() !!}</td>
+            </tr>
             </tbody>
+
         </table>
     </div>
 @stop

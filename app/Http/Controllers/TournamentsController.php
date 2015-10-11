@@ -11,6 +11,11 @@ use Kamaln7\Toastr\Facades\Toastr;
 
 class TournamentsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware( 'auth',['except' => ['sync']] );
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -49,9 +54,9 @@ class TournamentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Tournament $tournament)
     {
-        //
+        return view('tournaments.show',compact('tournament'));
     }
 
     /**

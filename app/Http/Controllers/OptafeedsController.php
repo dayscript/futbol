@@ -2,11 +2,13 @@
 
 namespace Dayscore\Http\Controllers;
 
+use Dayscore\Opta\Game;
 use Dayscore\Optafeed;
 use Dayscore\Tournament;
 use Illuminate\Http\Request;
 use Dayscore\Http\Requests;
 use Dayscore\Http\Controllers\Controller;
+use Kamaln7\Toastr\Facades\Toastr;
 use Nathanmac\Utilities\Parser\Facades\Parser;
 
 class OptafeedsController extends Controller
@@ -14,7 +16,7 @@ class OptafeedsController extends Controller
 
     public function __construct()
     {
-        $this->middleware( 'auth', ['except' => ['store']] );
+        $this->middleware( 'auth', ['except' => ['store','process']] );
     }
 
     /**
@@ -24,7 +26,7 @@ class OptafeedsController extends Controller
      */
     public function index()
     {
-        $optafeeds = Optafeed::latest()->get();
+        $optafeeds = Optafeed::latest()->paginate(15);
         return view('optafeeds.index', compact('optafeeds'));
     }
 
@@ -76,7 +78,8 @@ class OptafeedsController extends Controller
             'messageDigest' => isset($headers['x-meta-message-digest']) ? $headers['x-meta-message-digest'] : '',
             'content' => $post_data
         );
-        Optafeed::create($posts);
+        $feed = Optafeed::create($posts);
+        $feed->process();
         return ["success"];
     }
 
@@ -89,7 +92,8 @@ class OptafeedsController extends Controller
     public function show(Optafeed $optafeed)
     {
         $content = Parser::xml($optafeed->content);
-        dd($content["SoccerDocument"]["MatchData"][0]);
+
+        return($content);
         return view('optafeeds.show',compact('optafeed','content'));
     }
 
@@ -127,4 +131,15 @@ class OptafeedsController extends Controller
         //
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function process(Optafeed $optafeed)
+    {
+        $optafeed->process();
+        return redirect("optafeeds");
+    }
 }

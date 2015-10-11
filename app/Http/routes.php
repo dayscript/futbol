@@ -31,3 +31,4 @@ Route::resource('fixturetests','FixtureTestsController');
 Route::get('fixturetests/{fixturetests}/{option}', 'FixtureTestsController@show');
 Route::resource('tournaments','TournamentsController');
 Route::get('tournaments/sync/{optaid}/{optaseason}', 'TournamentsController@sync');
+Route::get('optafeeds/{optafeeds}/process', 'OptafeedsController@process');

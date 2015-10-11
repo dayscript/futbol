@@ -44,4 +44,23 @@ class Tournament extends Model
         Carbon::setLocale('es');
         return Carbon::parse($date)->diffForHumans();
     }
+
+    /**
+     * Get the opta-games associated with this tournament
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function optagames()
+    {
+        return $this->hasMany( 'Dayscore\Opta\Game' );
+    }
+
+    /**
+     * Get the opta-teams associated with this tournamet
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function optateams()
+    {
+        return $this->belongsToMany('Dayscore\Opta\Team','opta_team_tournament','tournament_id','opta_team_id')->withTimestamps();
+    }
+
 }
