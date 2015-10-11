@@ -80,20 +80,20 @@ class Optafeed extends Model
     public function tournament()
     {
         $tournament = Tournament::where('opta_id', $this->competitionId)->where('opta_season', $this->seasonId)->first();
-        if(!$tournament){
+        if (!$tournament) {
             $tournament = new Tournament();
             $tournament->opta_id = $this->competitionId;
             $tournament->opta_season = $this->seasonId;
-            $url = "http://futbol.dayscript.com/minamin/tournaments/tournamentopta/". $this->competitionId ."/".$this->seasonId;
+            $url = "http://futbol.dayscript.com/minamin/tournaments/tournamentopta/" . $this->competitionId . "/" . $this->seasonId;
             $json = json_decode(file_get_contents($url));
-            if($json->status == "success"){
+            if ($json->status == "success") {
                 $tournament->id = $json->data->id;
                 $tournament->name = $json->data->name;
                 Toastr::success("Se ha sincronizado el torneo correctamente!");
             } else {
                 Toastr::error("Ha ocurrido un error al sincronizar el torneo.");
             }
-            Toastr::success($tournament->name,"Torneo creado");
+            Toastr::success($tournament->name, "Torneo creado");
         }
         $tournament->save();
         return $tournament;
@@ -208,159 +208,16 @@ class Optafeed extends Model
             }
         }
     }
-    public function processF26($tournament, $content){
+
+    public function processF26($tournament, $content)
+    {
         if (isset($content["content.item"]["content.body"]["results"]["result"])) {
             $res = $content["content.item"]["content.body"]["results"]["result"];
-            $teamid = $res["home-team"]["team-id"];
-            $teamname = isset($res["home-team"]["team-name"]) ? $res["home-team"]["team-name"] : "";
-            $teamcode = isset($res["home-team"]["team-code"]) ? $res["home-team"]["team-code"] : "";
-            $team = Team::findOrNew($teamid);
-            if (!$team->id) {
-                $team->id = $teamid;
-                $team->name = $teamname;
-                $team->code = $teamcode;
-                $team->save();
-                Toastr::success($teamname, "Equipo Opta Creado");
-            } else {
-                $updated = false;
-                if ($team->code != $teamcode && $teamcode != "") {
-                    $team->code = $teamcode;
-                    $updated = true;
-                }
-                if ($team->name != $teamname && $teamname != "") {
-                    $team->name = $teamname;
-                    $updated = true;
-                }
-                if ($updated) {
-                    $team->save();
-                    Toastr::success($teamname, "Equipo Opta Actualizado");
-                }
-            }
-            $teamid = $res["away-team"]["team-id"];
-            $teamname = isset($res["away-team"]["team-name"]) ? $res["away-team"]["team-name"] : "";
-            $teamcode = isset($res["away-team"]["team-code"]) ? $res["away-team"]["team-code"] : "";
-            $team = Team::findOrNew($teamid);
-            if (!$team->id) {
-                $team->id = $teamid;
-                $team->name = $teamname;
-                $team->code = $teamcode;
-                $team->save();
-                Toastr::success($teamname, "Equipo Opta Creado");
-            } else {
-                $updated = false;
-                if ($team->code != $teamcode && $teamcode != "") {
-                    $team->code = $teamcode;
-                    $updated = true;
-                }
-                if ($team->name != $teamname && $teamname != "") {
-                    $team->name = $teamname;
-                    $updated = true;
-                }
-                if ($updated) {
-                    $team->save();
-                    Toastr::success($teamname, "Equipo Opta Actualizado");
-                }
-            }
-            $gameid = $res["@attributes"]["game-id"];
-            $game = Game::findOrNew($gameid);
-            if (!$game->id) {
-                $game->id = $gameid;
-                Toastr::success("Se ha creado el juego opta: " . $gameid);
-            }
-            if ($tournament) {
-                $tournament->optagames()->save($game);
-            }
-            if (isset($res["home-team"]["scorers"])) {
-                if (isset($res["home-team"]["scorers"]["scorer"]["player-code"])) {
-                    $scorer = $res["home-team"]["scorers"]["scorer"];
-                    $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
-                } else {
-                    foreach ($res["home-team"]["scorers"]["scorer"] as $scorer) {
-                        $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
-                    }
-                }
-            }
-            if (isset($res["away-team"]["scorers"])) {
-                if (isset($res["away-team"]["scorers"]["scorer"]["player-code"])) {
-                    $scorer = $res["away-team"]["scorers"]["scorer"];
-                    $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
-                } else {
-                    foreach ($res["away-team"]["scorers"]["scorer"] as $scorer) {
-                        $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
-                    }
-                }
-            }
-            foreach ($res["home-team"]["substitutions"]["substitution"] as $subs) {
-                $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
-                $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
-            }
-            foreach ($res["away-team"]["substitutions"]["substitution"] as $subs) {
-                $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
-                $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
-            }
-        } else {
-            foreach ($content["content.item"]["content.body"]["results"] as $row) {
-                $res = $row["result"];
-                $teamid = $res["home-team"]["team-id"];
-                $teamname = isset($res["home-team"]["team-name"]) ? $res["home-team"]["team-name"] : "";
-                $teamcode = isset($res["home-team"]["team-code"]) ? $res["home-team"]["team-code"] : "";
-                $team = Team::findOrNew($teamid);
-                if (!$team->id) {
-                    $team->id = $teamid;
-                    $team->name = $teamname;
-                    $team->code = $teamcode;
-                    $team->save();
-                    Toastr::success($teamname, "Equipo Opta Creado");
-                } else {
-                    $updated = false;
-                    if ($team->code != $teamcode && $teamcode != "") {
-                        $team->code = $teamcode;
-                        $updated = true;
-                    }
-                    if ($team->name != $teamname && $teamname != "") {
-                        $team->name = $teamname;
-                        $updated = true;
-                    }
-                    if ($updated) {
-                        $team->save();
-                        Toastr::success($teamname, "Equipo Opta Actualizado");
-                    }
-                }
+            if (isset($res["home-team"])) {
+                $this->updateTeam($res["home-team"]["team-id"], isset($res["home-team"]["team-name"]) ? $res["home-team"]["team-name"] : "", isset($res["home-team"]["team-code"]) ? $res["home-team"]["team-code"] : "");
+                $this->updateTeam($res["away-team"]["team-id"], isset($res["away-team"]["team-name"]) ? $res["away-team"]["team-name"] : "", isset($res["away-team"]["team-code"]) ? $res["away-team"]["team-code"] : "");
+                $this->updateGame($res["@attributes"]["game-id"], $tournament);
 
-                $teamid = $res["away-team"]["team-id"];
-                $teamname = isset($res["away-team"]["team-name"]) ? $res["away-team"]["team-name"] : "";
-                $teamcode = isset($res["away-team"]["team-code"]) ? $res["away-team"]["team-code"] : "";
-                $team = Team::findOrNew($teamid);
-                if (!$team->id) {
-                    $team->id = $teamid;
-                    $team->name = $teamname;
-                    $team->code = $teamcode;
-                    $team->save();
-                    Toastr::success($teamname, "Equipo Opta Creado");
-                } else {
-                    $updated = false;
-                    if ($team->code != $teamcode && $teamcode != "") {
-                        $team->code = $teamcode;
-                        $updated = true;
-                    }
-                    if ($team->name != $teamname && $teamname != "") {
-                        $team->name = $teamname;
-                        $updated = true;
-                    }
-                    if ($updated) {
-                        $team->save();
-                        Toastr::success($teamname, "Equipo Opta Actualizado");
-                    }
-                }
-                $gameid = $res["@attributes"]["game-id"];
-                $game = Game::findOrNew($gameid);
-                if (!$game->id) {
-                    $game->id = $gameid;
-                    Toastr::success("Se ha creado el juego opta: " . $gameid);
-                }
-                if ($tournament) {
-                    $tournament->optagames()->save($game);
-                }
                 if (isset($res["home-team"]["scorers"])) {
                     if (isset($res["home-team"]["scorers"]["scorer"]["player-code"])) {
                         $scorer = $res["home-team"]["scorers"]["scorer"];
@@ -381,15 +238,109 @@ class Optafeed extends Model
                         }
                     }
                 }
-                foreach ($res["home-team"]["substitutions"]["substitution"] as $subs) {
-                    $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
-                    $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                if (isset($res["home-team"]["substitutions"]["substitution"])) {
+                    foreach ($res["home-team"]["substitutions"]["substitution"] as $subs) {
+                        $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
+                        $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                    }
+
                 }
-                foreach ($res["away-team"]["substitutions"]["substitution"] as $subs) {
-                    $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
-                    $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                if (isset($res["away-team"]["substitutions"]["substitution"])) {
+                    foreach ($res["away-team"]["substitutions"]["substitution"] as $subs) {
+                        $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
+                        $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                    }
                 }
+            } else {
+
+            }
+        } else {
+            foreach ($content["content.item"]["content.body"]["results"] as $row) {
+                $res = $row["result"];
+                if (isset($res["home-team"])) {
+                    $this->updateTeam($res["home-team"]["team-id"], isset($res["home-team"]["team-name"]) ? $res["home-team"]["team-name"] : "", isset($res["home-team"]["team-code"]) ? $res["home-team"]["team-code"] : "");
+                    $this->updateTeam($res["away-team"]["team-id"], isset($res["away-team"]["team-name"]) ? $res["away-team"]["team-name"] : "", isset($res["away-team"]["team-code"]) ? $res["away-team"]["team-code"] : "");
+                    $this->updateGame($res["@attributes"]["game-id"], $tournament);
+
+                    if (isset($res["home-team"]["scorers"])) {
+                        if (isset($res["home-team"]["scorers"]["scorer"]["player-code"])) {
+                            $scorer = $res["home-team"]["scorers"]["scorer"];
+                            $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                        } else {
+                            foreach ($res["home-team"]["scorers"]["scorer"] as $scorer) {
+                                $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                            }
+                        }
+                    }
+                    if (isset($res["away-team"]["scorers"])) {
+                        if (isset($res["away-team"]["scorers"]["scorer"]["player-code"])) {
+                            $scorer = $res["away-team"]["scorers"]["scorer"];
+                            $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                        } else {
+                            foreach ($res["away-team"]["scorers"]["scorer"] as $scorer) {
+                                $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                            }
+                        }
+                    }
+                    if (isset($res["home-team"]["substitutions"]["substitution"])) {
+                        foreach ($res["home-team"]["substitutions"]["substitution"] as $subs) {
+                            $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
+                            $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                        }
+                    }
+
+                    if (isset($res["away-team"]["substitutions"]["substitution"])) {
+                        foreach ($res["away-team"]["substitutions"]["substitution"] as $subs) {
+                            $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
+                            $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                        }
+                    }
+                } else {
+
+                }
+
             }
         }
     }
+
+    public function updateTeam($teamid, $teamname, $teamcode)
+    {
+        $team = Team::findOrNew($teamid);
+        if (!$team->id) {
+            $team->id = $teamid;
+            $team->name = $teamname;
+            $team->code = $teamcode;
+            $team->save();
+            Toastr::success($teamname, "Equipo Opta Creado");
+        } else {
+            $updated = false;
+            if ($team->code != $teamcode && $teamcode != "") {
+                $team->code = $teamcode;
+                $updated = true;
+            }
+            if ($team->name != $teamname && $teamname != "") {
+                $team->name = $teamname;
+                $updated = true;
+            }
+            if ($updated) {
+                $team->save();
+                Toastr::success($teamname, "Equipo Opta Actualizado");
+            }
+        }
+    }
+
+    public function updateGame($gameid,$tournament = null)
+    {
+        $game = Game::findOrNew($gameid);
+        if (!$game->id) {
+            $game->id = $gameid;
+            Toastr::success($gameid,"Partido Opta Creado");
+        }
+        if ($tournament) {
+            $tournament->optagames()->save($game);
+        }
+
+    }
+
 }
+
