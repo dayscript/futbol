@@ -2,18 +2,19 @@
 
 namespace Dayscore\Http\Controllers;
 
-use Dayscore\Team;
-use Dayscore\Tournament;
+use Dayscore\Opta\Game;
 use Illuminate\Http\Request;
 use Dayscore\Http\Requests;
 use Dayscore\Http\Controllers\Controller;
-use Kamaln7\Toastr\Facades\Toastr;
 
-class TournamentsController extends Controller
+class OptagamesController extends Controller
 {
+    /**
+     * Controller constructor and middleware definitions
+     */
     public function __construct()
     {
-        $this->middleware( 'auth',['except' => ['sync']] );
+        $this->middleware( 'auth' );
     }
 
     /**
@@ -23,8 +24,7 @@ class TournamentsController extends Controller
      */
     public function index()
     {
-        $tournaments = Tournament::all();
-        return view('tournaments.index',compact('tournaments'));
+        //
     }
 
     /**
@@ -54,9 +54,9 @@ class TournamentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Tournament $tournament, $option="")
+    public function show(Game $game, $option = "")
     {
-        return view('tournaments.show',compact('tournament','option'));
+        return view('optagames.show',compact('game','option'));
     }
 
     /**
@@ -91,20 +91,5 @@ class TournamentsController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function sync($optaid, $optaseason)
-    {
-        $url = "http://futbol.dayscript.com/minamin/tournaments/tournamentopta/". $optaid."/".$optaseason;
-        $json = json_decode(file_get_contents($url));
-        if($json->status == "success"){
-            $team = Tournament::firstOrCreate(["id"=>$json->data->id]);
-            $team->update(["name"=>$json->data->name,"opta_id"=>$optaid,"opta_season"=>$optaseason]);
-            Toastr::success("Se ha sincronizado el torneo correctamente!");
-            return redirect('tournaments');
-        } else {
-            Toastr::error("Ha ocurrido un error al sincronizar el torneo.");
-            return redirect('tournaments');
-        }
     }
 }

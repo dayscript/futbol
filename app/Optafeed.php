@@ -3,6 +3,7 @@
 namespace Dayscore;
 
 use Carbon\Carbon;
+use Dayscore\Opta\Event;
 use Dayscore\Opta\Game;
 use Dayscore\Opta\Player;
 use Dayscore\Opta\Team;
@@ -62,7 +63,9 @@ class Optafeed extends Model
     public function getCreatedAtAttribute($date)
     {
         Carbon::setLocale('es');
-        return Carbon::parse($date);
+        $result = Carbon::createFromFormat("Y-m-d H:i:s", $date, "America/Bogota");
+        $result->timezone = 'America/Bogota';
+        return Carbon::parse($result);
     }
 
     /**
@@ -140,11 +143,29 @@ class Optafeed extends Model
             $this->processF1($tournament, $content["SoccerDocument"]);
         } else if ($this->feedType == "F26") {
             $this->processF26($tournament, $content);
+        } else if ($this->feedType == "F13") {
+            $this->processF13($tournament, $content);
         }
     }
 
+    public function processF13($tournament, $content)
+    {
+        $gameid = $content["@attributes"]["game_id"];
+        $this->updateGame($gameid, $tournament);
+        foreach($content["message"] as $message){
+            if(isset($message["@attributes"]["player_ref1"]))$this->updatePlayer($message["@attributes"]["player_ref1"]);
+            if(isset($message["@attributes"]["player_ref2"]))$this->updatePlayer($message["@attributes"]["player_ref2"]);
+            $this->updateEvent($message,$gameid);
+        }
+
+
+    }
     public function processF1($tournament, $content)
     {
+        if($tournament->name == ""){
+            $tournament->name = $content["@attributes"]["competition_name"];
+            $tournament->save();
+        }
         // Procesar equipos
         foreach ($content["Team"] as $row) {
             $teamid = str_replace("t", "", $row["@attributes"]["uID"]);
@@ -222,9 +243,11 @@ class Optafeed extends Model
                     if (isset($res["home-team"]["scorers"]["scorer"]["player-code"])) {
                         $scorer = $res["home-team"]["scorers"]["scorer"];
                         $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                        $this->updateEvent($scorer,$res["@attributes"]["game-id"],$res["home-team"]["team-id"]);
                     } else {
                         foreach ($res["home-team"]["scorers"]["scorer"] as $scorer) {
                             $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                            $this->updateEvent($scorer,$res["@attributes"]["game-id"],$res["home-team"]["team-id"]);
                         }
                     }
                 }
@@ -232,9 +255,11 @@ class Optafeed extends Model
                     if (isset($res["away-team"]["scorers"]["scorer"]["player-code"])) {
                         $scorer = $res["away-team"]["scorers"]["scorer"];
                         $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                        $this->updateEvent($scorer,$res["@attributes"]["game-id"],$res["away-team"]["team-id"]);
                     } else {
                         foreach ($res["away-team"]["scorers"]["scorer"] as $scorer) {
                             $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                            $this->updateEvent($scorer,$res["@attributes"]["game-id"],$res["away-team"]["team-id"]);
                         }
                     }
                 }
@@ -242,6 +267,7 @@ class Optafeed extends Model
                     foreach ($res["home-team"]["substitutions"]["substitution"] as $subs) {
                         $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
                         $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                        $this->updateEvent($subs,$res["@attributes"]["game-id"],$res["home-team"]["team-id"]);
                     }
 
                 }
@@ -249,10 +275,55 @@ class Optafeed extends Model
                     foreach ($res["away-team"]["substitutions"]["substitution"] as $subs) {
                         $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
                         $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                        $this->updateEvent($subs,$res["@attributes"]["game-id"],$res["away-team"]["team-id"]);
                     }
                 }
             } else {
+                foreach($res as $res2){
+                    $this->updateTeam($res2["home-team"]["team-id"], isset($res2["home-team"]["team-name"]) ? $res2["home-team"]["team-name"] : "", isset($res2["home-team"]["team-code"]) ? $res2["home-team"]["team-code"] : "");
+                    $this->updateTeam($res2["away-team"]["team-id"], isset($res2["away-team"]["team-name"]) ? $res2["away-team"]["team-name"] : "", isset($res2["away-team"]["team-code"]) ? $res2["away-team"]["team-code"] : "");
+                    $this->updateGame($res2["@attributes"]["game-id"], $tournament);
 
+                    if (isset($res2["home-team"]["scorers"])) {
+                        if (isset($res2["home-team"]["scorers"]["scorer"]["player-code"])) {
+                            $scorer = $res2["home-team"]["scorers"]["scorer"];
+                            $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                            $this->updateEvent($scorer,$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"]);
+                        } else {
+                            foreach ($res2["home-team"]["scorers"]["scorer"] as $scorer) {
+                                $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                                $this->updateEvent($scorer,$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"]);
+                            }
+                        }
+                    }
+                    if (isset($res2["away-team"]["scorers"])) {
+                        if (isset($res2["away-team"]["scorers"]["scorer"]["player-code"])) {
+                            $scorer = $res2["away-team"]["scorers"]["scorer"];
+                            $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                            $this->updateEvent($scorer,$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"]);
+                        } else {
+                            foreach ($res2["away-team"]["scorers"]["scorer"] as $scorer) {
+                                $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                                $this->updateEvent($scorer,$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"]);
+                            }
+                        }
+                    }
+                    if (isset($res2["home-team"]["substitutions"]["substitution"])) {
+                        foreach ($res2["home-team"]["substitutions"]["substitution"] as $subs) {
+                            $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
+                            $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                            $this->updateEvent($subs,$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"]);
+                        }
+                    }
+
+                    if (isset($res2["away-team"]["substitutions"]["substitution"])) {
+                        foreach ($res2["away-team"]["substitutions"]["substitution"] as $subs) {
+                            $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
+                            $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                            $this->updateEvent($subs,$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"]);
+                        }
+                    }
+                }
             }
         } else {
             foreach ($content["content.item"]["content.body"]["results"] as $row) {
@@ -266,9 +337,11 @@ class Optafeed extends Model
                         if (isset($res["home-team"]["scorers"]["scorer"]["player-code"])) {
                             $scorer = $res["home-team"]["scorers"]["scorer"];
                             $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                            $this->updateEvent($scorer,$res["@attributes"]["game-id"],$res["home-team"]["team-id"]);
                         } else {
                             foreach ($res["home-team"]["scorers"]["scorer"] as $scorer) {
                                 $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                                $this->updateEvent($scorer,$res["@attributes"]["game-id"],$res["home-team"]["team-id"]);
                             }
                         }
                     }
@@ -276,9 +349,11 @@ class Optafeed extends Model
                         if (isset($res["away-team"]["scorers"]["scorer"]["player-code"])) {
                             $scorer = $res["away-team"]["scorers"]["scorer"];
                             $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                            $this->updateEvent($scorer,$res["@attributes"]["game-id"],$res["away-team"]["team-id"]);
                         } else {
                             foreach ($res["away-team"]["scorers"]["scorer"] as $scorer) {
                                 $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                                $this->updateEvent($scorer,$res["@attributes"]["game-id"],$res["away-team"]["team-id"]);
                             }
                         }
                     }
@@ -286,6 +361,7 @@ class Optafeed extends Model
                         foreach ($res["home-team"]["substitutions"]["substitution"] as $subs) {
                             $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
                             $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                            $this->updateEvent($subs,$res["@attributes"]["game-id"],$res["home-team"]["team-id"]);
                         }
                     }
 
@@ -293,14 +369,200 @@ class Optafeed extends Model
                         foreach ($res["away-team"]["substitutions"]["substitution"] as $subs) {
                             $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
                             $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                            $this->updateEvent($subs,$res["@attributes"]["game-id"],$res["away-team"]["team-id"]);
                         }
                     }
                 } else {
+                    foreach($res as $res2){
+                        $this->updateTeam($res2["home-team"]["team-id"], isset($res2["home-team"]["team-name"]) ? $res2["home-team"]["team-name"] : "", isset($res2["home-team"]["team-code"]) ? $res2["home-team"]["team-code"] : "");
+                        $this->updateTeam($res2["away-team"]["team-id"], isset($res2["away-team"]["team-name"]) ? $res2["away-team"]["team-name"] : "", isset($res2["away-team"]["team-code"]) ? $res2["away-team"]["team-code"] : "");
+                        $this->updateGame($res2["@attributes"]["game-id"], $tournament);
 
+                        if (isset($res2["home-team"]["scorers"])) {
+                            if (isset($res2["home-team"]["scorers"]["scorer"]["player-code"])) {
+                                $scorer = $res2["home-team"]["scorers"]["scorer"];
+                                $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                                $this->updateEvent($scorer,$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"]);
+                            } else {
+                                foreach ($res2["home-team"]["scorers"]["scorer"] as $scorer) {
+                                    $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                                    $this->updateEvent($scorer,$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"]);
+                                }
+                            }
+                        }
+                        if (isset($res2["away-team"]["scorers"])) {
+                            if (isset($res2["away-team"]["scorers"]["scorer"]["player-code"])) {
+                                $scorer = $res2["away-team"]["scorers"]["scorer"];
+                                $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                                $this->updateEvent($scorer,$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"]);
+                            } else {
+                                foreach ($res2["away-team"]["scorers"]["scorer"] as $scorer) {
+                                    $this->updatePlayer($scorer["player-code"], (isset($scorer["player-firstname"]) ? $scorer["player-firstname"] : ""), $scorer["player-name"]);
+                                    $this->updateEvent($scorer,$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"]);
+                                }
+                            }
+                        }
+                        if (isset($res2["home-team"]["substitutions"]["substitution"])) {
+                            foreach ($res2["home-team"]["substitutions"]["substitution"] as $subs) {
+                                $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
+                                $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                                $this->updateEvent($subs,$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"]);
+                            }
+                        }
+
+                        if (isset($res2["away-team"]["substitutions"]["substitution"])) {
+                            foreach ($res2["away-team"]["substitutions"]["substitution"] as $subs) {
+                                $this->updatePlayer($subs["sub-off"]["player-code"], (isset($subs["sub-off"]["player-firstname"])) ? $subs["sub-off"]["player-firstname"] : "", $subs["sub-off"]["player-name"]);
+                                $this->updatePlayer($subs["sub-on"]["player-code"], (isset($subs["sub-on"]["player-firstname"])) ? $subs["sub-on"]["player-firstname"] : "", $subs["sub-on"]["player-name"]);
+                                $this->updateEvent($subs,$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"]);
+                            }
+                        }
+                    }
                 }
 
             }
         }
+    }
+
+    public function updateEvent($data,$gameid,$teamid = null)
+    {
+        if(isset($data["@attributes"]["comment"])){
+            $eventid = $data["@attributes"]["id"];
+        } else {
+            $eventid = $data["@attributes"]["event_id"];
+        }
+
+        if(isset($data["@attributes"]["goal-type"])) {
+            $type = "goal";
+        } else if(isset($data["@attributes"]["sub-timestamp"])) {
+            $type = "substitution";
+        } else if(isset($data["@attributes"]["comment"])){
+            $type = "comment";
+        } else {
+            $type = "other";
+        }
+        $event = Event::findOrNew($eventid);
+        if(!$event->id){
+            $event->id = $eventid;
+            $event->type = $type;
+            $event->save();
+            Toastr::success($eventid, "Evento Opta Creado");
+        }
+        $update = false;
+        if(!$event->game_id && $gameid){
+            $event->game_id = $gameid;
+            $update = true;
+        }
+        if(!$event->team_id && $teamid){
+            $event->team_id = $teamid;
+            $update = true;
+        }
+        if($type && $event->type!=$type){
+            $event->type = $type;
+            $update = true;
+        }
+        if($event->type == "goal"){
+            if(isset($data["@attributes"]["goal-type"]) && $event->goal_type != $data["@attributes"]["goal-type"]){
+                $event->goal_type = $data["@attributes"]["goal-type"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["min"]) && $event->minute != $data["@attributes"]["min"]){
+                $event->minute = $data["@attributes"]["min"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["sec"]) && $event->second != $data["@attributes"]["sec"]){
+                $event->second = $data["@attributes"]["sec"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["time"]) && $event->time != $data["@attributes"]["time"]){
+                $event->time = $data["@attributes"]["time"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["goal-timestamp"]) && $event->datetime != $data["@attributes"]["goal-timestamp"]){
+                $event->datetime = $data["@attributes"]["goal-timestamp"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["period"]) && $event->period != $data["@attributes"]["period"]){
+                $event->period = $data["@attributes"]["period"];
+                $update = true;
+            }
+            if(isset($data["player-code"]) && $event->player_id != $data["player-code"]){
+                $event->player_id = $data["player-code"];
+                $update = true;
+            }
+        } else if($event->type == "substitution"){
+            if(isset($data["@attributes"]["min"]) && $event->minute != $data["@attributes"]["min"]){
+                $event->minute = $data["@attributes"]["min"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["sec"]) && $event->second != $data["@attributes"]["sec"]){
+                $event->second = $data["@attributes"]["sec"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["time"]) && $event->time != $data["@attributes"]["time"]){
+                $event->time = $data["@attributes"]["time"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["sub-timestamp"]) && $event->datetime != $data["@attributes"]["sub-timestamp"]){
+                $event->datetime = $data["@attributes"]["sub-timestamp"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["period"]) && $event->period != $data["@attributes"]["period"]){
+                $event->period = $data["@attributes"]["period"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["reason"]) && $event->sub_reason != $data["@attributes"]["reason"]){
+                $event->sub_reason = $data["@attributes"]["reason"];
+                $update = true;
+            }
+            if(isset($data["sub-off"]["player-code"]) && $event->player_id != $data["sub-off"]["player-code"]){
+                $event->player_id = $data["sub-off"]["player-code"];
+                $update = true;
+            }
+            if(isset($data["sub-on"]["player-code"]) && $event->sub_on_player_id != $data["sub-on"]["player-code"]){
+                $event->sub_on_player_id = $data["sub-on"]["player-code"];
+                $update = true;
+            }
+        } else if($event->type == "comment"){
+            if(isset($data["@attributes"]["comment"]) && $event->comment != $data["@attributes"]["comment"]){
+                $event->comment = $data["@attributes"]["comment"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["type"]) && $event->comment_type != $data["@attributes"]["type"]){
+                $event->comment_type = $data["@attributes"]["type"];
+                $update = true;
+            }
+            //
+            if(isset($data["@attributes"]["player_ref1"]) && $event->player_id != $data["@attributes"]["player_ref1"]){
+                $event->player_id = $data["@attributes"]["player_ref1"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["player_ref2"]) && $event->comment_player_ref2 != $data["@attributes"]["player_ref2"]){
+                $event->comment_player_ref2 = $data["@attributes"]["player_ref2"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["minute"]) && $event->minute != $data["@attributes"]["minute"]){
+                $event->minute = $data["@attributes"]["minute"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["second"]) && $event->second != $data["@attributes"]["second"]){
+                $event->second = $data["@attributes"]["second"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["time"]) && $event->time != $data["@attributes"]["time"]){
+                $event->time = $data["@attributes"]["time"];
+                $update = true;
+            }
+            if(isset($data["@attributes"]["period"]) && $event->period != $data["@attributes"]["period"]){
+                $event->period = $data["@attributes"]["period"];
+                $update = true;
+            }
+        }
+        if($update){
+            $event->save();
+            Toastr::success($eventid, "Evento Opta Actualizado");
+        }
+
     }
 
     public function updateTeam($teamid, $teamname, $teamcode)

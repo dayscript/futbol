@@ -60,7 +60,7 @@ class FixtureTestsController extends Controller
     {
 //        if ( $id ) $fixtureTest = FixtureTest::find( $id );
 //        $option = "teams";
-        return view('fixturetests.show',compact('fixture','option','id'));
+        return view('fixturetests.show',compact('fixture','option'));
     }
 
     /**

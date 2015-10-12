@@ -8,9 +8,8 @@
             <thead>
             <tr>
                 <th>Tipo</th>
-                <th>Torneo / Temporada</th>
-                <th>Partido</th>
-                <th>Creado</th>
+                <th>Torneo</th>
+                <th>Recibido</th>
                 <th>Opciones</th>
             </tr>
             </thead>
@@ -18,8 +17,10 @@
             @foreach($optafeeds as $feed)
                 <tr class="optafeed-{{$feed->id}}">
                     <td>{{$feed->feedType}}</td>
-                    <td>{{($feed->tournament())?$feed->tournament()->name:$feed->competitionId." / ".$feed->seasonId }}</td>
-                    <td>{{$feed->gameId}}</td>
+                    <td>{{($feed->tournament())?$feed->tournament()->name:$feed->competitionId." / ".$feed->seasonId }}
+                        <br>
+                        <small><strong>ID:</strong> {{$feed->tournament()->id}} <strong>OPTA:</strong> {{$feed->competitionId}} / {{$feed->seasonId}}</small>
+                    </td>
                     <td>{{$feed->created_at}}</td>
                     <td>
                         <a class="btn btn-info btn-sm" href="/optafeeds/{{$feed->id}}"><i class="fa fa-futbol-o"></i>

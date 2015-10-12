@@ -26,9 +26,12 @@ Route::get('dashboard','PagesController@dashboard');
 Route::get('help','PagesController@help');
 
 Route::resource('optafeeds','OptafeedsController');
+Route::resource('optagames','OptagamesController');
+Route::get('optagames/{optagames}/{option}', 'OptagamesController@show');
 Route::resource('users','UsersController');
 Route::resource('fixturetests','FixtureTestsController');
 Route::get('fixturetests/{fixturetests}/{option}', 'FixtureTestsController@show');
 Route::resource('tournaments','TournamentsController');
 Route::get('tournaments/sync/{optaid}/{optaseason}', 'TournamentsController@sync');
+Route::get('tournaments/{tournaments}/{option}', 'TournamentsController@show');
 Route::get('optafeeds/{optafeeds}/process', 'OptafeedsController@process');

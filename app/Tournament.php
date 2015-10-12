@@ -30,7 +30,7 @@ class Tournament extends Model
     public function getCreatedAtAttribute( $date )
     {
         Carbon::setLocale('es');
-        return Carbon::parse($date)->diffForHumans();
+        return Carbon::parse($date);
     }
 
     /**
@@ -51,7 +51,7 @@ class Tournament extends Model
      */
     public function optagames()
     {
-        return $this->hasMany( 'Dayscore\Opta\Game' );
+        return $this->hasMany( 'Dayscore\Opta\Game' )->orderBy('date','desc');
     }
 
     /**

@@ -14,6 +14,9 @@ use Nathanmac\Utilities\Parser\Facades\Parser;
 class OptafeedsController extends Controller
 {
 
+    /**
+     * Controller constructor and middleware definitions
+     */
     public function __construct()
     {
         $this->middleware( 'auth', ['except' => ['store','process']] );
@@ -94,7 +97,7 @@ class OptafeedsController extends Controller
         $content = Parser::xml($optafeed->content);
 
         return($content);
-        return view('optafeeds.show',compact('optafeed','content'));
+//        return view('optafeeds.show',compact('optafeed','content'));
     }
 
     /**

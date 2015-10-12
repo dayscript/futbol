@@ -19,12 +19,12 @@ class Team extends Model
      */
     protected $fillable = ['id','name'];
 
-    public function image()
+    public function image($size)
     {
-        // 20x20 Image
-        // http://images.akamai.opta.net/football/team/badges_20/XX.png
-        // 150x150 image
-        // http://images.akamai.opta.net/football/team/badges_150/XX.png
-        return "http://images.akamai.opta.net/football/team/badges_150/".$this->id.".png";
+        if($size && $size == 20){
+            return "http://images.akamai.opta.net/football/team/badges_20/".$this->id.".png";
+        } else {
+            return "http://images.akamai.opta.net/football/team/badges_150/".$this->id.".png";
+        }
     }
 }

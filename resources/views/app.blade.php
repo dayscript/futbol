@@ -25,6 +25,7 @@
 </div>
 <div class="container-fluid" id="section-content">
     <div class="container">
+        @yield('breadcrumb')
         @yield('content')
     </div>
 </div>

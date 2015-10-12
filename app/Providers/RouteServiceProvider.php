@@ -28,6 +28,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('users', 'Dayscore\User');
         $router->model('fixturetests', 'Dayscore\FixtureTest');
         $router->model('optafeeds', 'Dayscore\Optafeed');
+        $router->model('optagames', 'Dayscore\Opta\Game');
         $router->model('tournaments', 'Dayscore\Tournament');
     }
 
