@@ -11,7 +11,7 @@
         @show
     </title>
     <!-- Bootstrap CSS -->
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
+    <link rel="icon" href="{{ asset('favicon.ico') }}"/>
     <link rel="stylesheet" href="{{ asset('css/vendor.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @yield('styles')
