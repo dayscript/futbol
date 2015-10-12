@@ -158,14 +158,18 @@ class Optafeed extends Model
         $content = $parser->xml($this->content);
         if ($this->feedType == "F1") {
             $this->processF1($tournament, $content["SoccerDocument"]);
+            $this->processed = date("Y-m-d H:i:s");
+            $this->save();
         } else if ($this->feedType == "F26") {
             $this->processF26($tournament, $content);
+            $this->processed = date("Y-m-d H:i:s");
+            $this->save();
         } else if ($this->feedType == "F13") {
             $this->processF13($tournament, $content);
+            $this->processed = date("Y-m-d H:i:s");
+            $this->save();
         }
-        $this->processed = date("Y-m-d H:i:s");
-        $this->save();
-//        dd($this->processed);
+
     }
 
     public function processF13($tournament, $content)
