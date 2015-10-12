@@ -11,8 +11,8 @@
         @show
     </title>
     <!-- Bootstrap CSS -->
-    <link rel="shortcut icon" type="image/x-icon" media="all" href="{{ asset('favicon.ico') }}"/>
-    <link rel= "icon" media="all" type="image/vnd.microsoft.icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="shortcut icon" type="image/x-icon" media="all" href="/favicon.ico"/>
+    <link rel= "icon" media="all" type="image/vnd.microsoft.icon" href="/favicon.ico" />
 
     <link rel="stylesheet" href="{{ asset('css/vendor.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
