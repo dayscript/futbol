@@ -9,7 +9,7 @@
             <tr>
                 <th>Tipo</th>
                 <th>Torneo</th>
-                <th>Recibido</th>
+                <th>Recibido / Procesado</th>
                 <th>Opciones</th>
             </tr>
             </thead>
@@ -21,7 +21,10 @@
                         <br>
                         <small><strong>ID:</strong> {{$feed->tournament()->id}} <strong>OPTA:</strong> {{$feed->competitionId}} / {{$feed->seasonId}}</small>
                     </td>
-                    <td>{{$feed->created_at}}</td>
+                    <td>
+                        {{$feed->created_at}}<br>
+                        <small>{{$feed->processed}}</small>
+                    </td>
                     <td>
                         <a class="btn btn-info btn-sm" href="/optafeeds/{{$feed->id}}"><i class="fa fa-futbol-o"></i>
                             Detalle</a>

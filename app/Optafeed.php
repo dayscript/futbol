@@ -45,14 +45,15 @@ class Optafeed extends Model
         'feedId',
         'dateCreated',
         'messageDigest',
-        'content'
+        'content'.
+        'processed'
     ];
     /**
      * The attributes that should be treated as Carbon dates.
      *
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = ['created_at', 'updated_at','processed'];
 
     /**
      * Format date attribute more human friendly
@@ -67,7 +68,23 @@ class Optafeed extends Model
         $result->timezone = 'America/Bogota';
         return Carbon::parse($result);
     }
-
+    /**
+     * Format date attribute more human friendly
+     *
+     * @param $date
+     * @return string
+     */
+    public function getProcessedAttribute($date)
+    {
+        if($date){
+            Carbon::setLocale('es');
+            $result = Carbon::createFromFormat("Y-m-d H:i:s", $date, "America/Bogota");
+            $result->timezone = 'America/Bogota';
+            return Carbon::parse($result);
+        } else {
+            return "Sin  procesar";
+        }
+    }
     /**
      * Format date attribute more human friendly
      *
@@ -146,6 +163,9 @@ class Optafeed extends Model
         } else if ($this->feedType == "F13") {
             $this->processF13($tournament, $content);
         }
+        $this->processed = date("Y-m-d H:i:s");
+        $this->save();
+//        dd($this->processed);
     }
 
     public function processF13($tournament, $content)
