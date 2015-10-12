@@ -45,7 +45,7 @@ class Optafeed extends Model
         'feedId',
         'dateCreated',
         'messageDigest',
-        'content'.
+        'content',
         'processed'
     ];
     /**
