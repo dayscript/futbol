@@ -164,8 +164,8 @@ class Optafeed extends Model
             $temp = preg_replace($pattern,'<$1>$2</$1>',$this->content);
             $content = $parser->xml($temp);
             $this->processF40($tournament, $content["SoccerDocument"]);
-//            $this->processed = date("Y-m-d H:i:s");
-//            $this->save();
+            $this->processed = date("Y-m-d H:i:s");
+            $this->save();
         }
 
     }
