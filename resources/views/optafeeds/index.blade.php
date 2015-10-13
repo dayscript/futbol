@@ -16,7 +16,7 @@
             <tbody>
             @foreach($optafeeds as $feed)
                 <tr class="optafeed-{{$feed->id}}">
-                    <td>{{$feed->feedType}}</td>
+                    <td>{{$feed->type()}}</td>
                     <td>{{($feed->tournament())?$feed->tournament()->name:$feed->competitionId." / ".$feed->seasonId }}
                         <br>
                         <small><strong>ID:</strong> {{$feed->tournament()->id}} <strong>OPTA:</strong> {{$feed->competitionId}} / {{$feed->seasonId}}</small>

@@ -99,6 +99,21 @@ class Optafeed extends Model
         return Carbon::parse($date)->diffForHumans();
     }
 
+    public function type()
+    {
+        if($this->feedType == "F26") {
+            return "Live Scores";
+        } else if($this->feedType == "F40"){
+            return "Squads Feed";
+        } else if($this->feedType == "F1"){
+            return "Fixtures & results";
+        } else if($this->feedType == "F13"){
+            return "Commentary Feed";
+        } else {
+            return $this->feedType;
+        }
+    }
+
     public function tournament()
     {
         $tournament = Tournament::where('opta_id', $this->competitionId)->where('opta_season', $this->seasonId)->first();
