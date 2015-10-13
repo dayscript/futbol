@@ -625,7 +625,8 @@ class Optafeed extends Model
                         }
 
                         if (isset($res2["away-team"]["substitutions"]["substitution"])) {
-                            foreach ($res2["away-team"]["substitutions"]["substitution"] as $subs) {
+                            if(isset($res2["away-team"]["substitutions"]["substitution"]["sub-off"])){
+                                $subs = $res2["away-team"]["substitutions"]["substitution"];
                                 $this->updatePlayer($subs["sub-off"]["player-code"],
                                     ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
                                         "last_name"=>$subs["sub-off"]["player-name"],
@@ -637,6 +638,20 @@ class Optafeed extends Model
                                         "name"=>$subs["sub-on"]["player-name"]
                                     ]);
                                 $this->updateEvent($subs,$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"]);
+                            } else {
+                                foreach ($res2["away-team"]["substitutions"]["substitution"] as $subs) {
+                                    $this->updatePlayer($subs["sub-off"]["player-code"],
+                                        ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
+                                            "last_name"=>$subs["sub-off"]["player-name"],
+                                            "name"=>$subs["sub-off"]["player-name"]
+                                        ]);
+                                    $this->updatePlayer($subs["sub-on"]["player-code"],
+                                        ["first_name"=>isset($subs["sub-on"]["player-firstname"]) ? $subs["sub-on"]["player-firstname"] : "",
+                                            "last_name"=>$subs["sub-on"]["player-name"],
+                                            "name"=>$subs["sub-on"]["player-name"]
+                                        ]);
+                                    $this->updateEvent($subs,$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"]);
+                                }
                             }
                         }
                     }
