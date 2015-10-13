@@ -18,7 +18,7 @@
         @foreach($tournament->optateams as $team)
             <tr>
                 <td>{{$team->id}}</td>
-                <td>{{$team->name}}</td>
+                <td><img src="{{$team->image()}}" alt="{{$team->name}}"> {{$team->name}}</td>
                 <td>{{$team->code}}</td>
             </tr>
         @endforeach

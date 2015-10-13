@@ -39,7 +39,7 @@ class Team extends Model
         'venue_id'
     ];
 
-    public function image($size)
+    public function image($size=20)
     {
         if($size && $size == 20){
             return "http://images.akamai.opta.net/football/team/badges_20/".$this->id.".png";

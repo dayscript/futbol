@@ -123,7 +123,6 @@ class Optafeed extends Model
 
     public function updatePlayer($playerid, $options = [])
     {
-        //$first = "", $last = "", $known = null
         $player = Player::findOrNew($playerid);
         if (!$player->id) {
             $player->id = $playerid;
@@ -131,23 +130,15 @@ class Optafeed extends Model
             Toastr::success($playerid, "Jugador Creado");
         }
         $player->update($options);
-//            $update = false;
-//            if ($player->first_name != $first && $first) {
-//                $player->first_name = $first;
-//                $update = true;
-//            }
-//            if ($player->last_name != $last && $last) {
-//                $player->last_name = $last;
-//                $update = true;
-//            }
-//            if ($player->known != $known && $known) {
-//                $player->known = $known;
-//                $update = true;
-//            }
-//            if ($update) {
-//                $player->save();
-//                Toastr::success($first . " " . $last, "Jugador Actualizado");
-//            }
+    }
+    public function updatePlayerTournament($playerid, $options = [])
+    {
+        $tournament = $this->tournament();
+        if ($tournament) {
+            $tournament->optaplayers()->detach($playerid);
+            $tournament->optaplayers()->attach($playerid,$options);
+        }
+
     }
 
 
@@ -229,12 +220,16 @@ class Optafeed extends Model
                 if(isset($player["preferred_foot"]))$options["preferred_foot"] = $player["preferred_foot"];
                 if(isset($player["weight"]))$options["weight"] = $player["weight"];
                 if(isset($player["height"]))$options["height"] = $player["height"];
+                if(isset($player["country"]))$options["country"] = $player["country"];
+                $this->updatePlayer($playerid,$options);
+                $options = [];
+                if(isset($player["Position"]))$options["position"] = $player["Position"];
                 if(isset($player["jersey_num"]))$options["jersey_num"] = $player["jersey_num"];
                 if(isset($player["real_position"]))$options["real_position"] = $player["real_position"];
                 if(isset($player["real_position_side"]))$options["real_position_side"] = $player["real_position_side"];
                 if(isset($player["join_date"]))$options["join_date"] = $player["join_date"];
-                if(isset($player["country"]))$options["country"] = $player["country"];
-                $this->updatePlayer($playerid,$options);
+                $options["team_id"] = $teamid;
+                $this->updatePlayerTournament($playerid,$options);
             }
         }
 

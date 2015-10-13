@@ -55,12 +55,21 @@ class Tournament extends Model
     }
 
     /**
-     * Get the opta-teams associated with this tournamet
+     * Get the opta-teams associated with this tournament
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function optateams()
     {
         return $this->belongsToMany('Dayscore\Opta\Team','opta_team_tournament','tournament_id','opta_team_id')->withTimestamps();
+    }
+
+    /**
+     * Get the opta-players associated with this tournament
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function optaplayers()
+    {
+        return $this->belongsToMany('Dayscore\Opta\Player','opta_player_tournament','tournament_id','player_id')->withTimestamps();
     }
 
 }
