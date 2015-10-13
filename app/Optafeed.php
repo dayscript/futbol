@@ -374,7 +374,8 @@ class Optafeed extends Model
                     }
                 }
                 if (isset($res["home-team"]["substitutions"]["substitution"])) {
-                    foreach ($res["home-team"]["substitutions"]["substitution"] as $subs) {
+                    if(isset($res["home-team"]["substitutions"]["substitution"]["sub-off"])){
+                        $subs = $res["home-team"]["substitutions"]["substitution"];
                         $this->updatePlayer($subs["sub-off"]["player-code"],
                             ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
                                 "last_name"=>$subs["sub-off"]["player-name"],
@@ -386,11 +387,25 @@ class Optafeed extends Model
                                 "name"=>$subs["sub-on"]["player-name"]
                             ]);
                         $this->updateEvent($subs,$res["@attributes"]["game-id"],$res["home-team"]["team-id"]);
+                    } else {
+                        foreach ($res["home-team"]["substitutions"]["substitution"] as $subs) {
+                            $this->updatePlayer($subs["sub-off"]["player-code"],
+                                ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
+                                    "last_name"=>$subs["sub-off"]["player-name"],
+                                    "name"=>$subs["sub-off"]["player-name"]
+                                ]);
+                            $this->updatePlayer($subs["sub-on"]["player-code"],
+                                ["first_name"=>isset($subs["sub-on"]["player-firstname"]) ? $subs["sub-on"]["player-firstname"] : "",
+                                    "last_name"=>$subs["sub-on"]["player-name"],
+                                    "name"=>$subs["sub-on"]["player-name"]
+                                ]);
+                            $this->updateEvent($subs,$res["@attributes"]["game-id"],$res["home-team"]["team-id"]);
+                        }
                     }
-
                 }
                 if (isset($res["away-team"]["substitutions"]["substitution"])) {
-                    foreach ($res["away-team"]["substitutions"]["substitution"] as $subs) {
+                    if(isset($res["away-team"]["substitutions"]["substitution"]["sub-off"])){
+                        $subs = $res["away-team"]["substitutions"]["substitution"];
                         $this->updatePlayer($subs["sub-off"]["player-code"],
                             ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
                                 "last_name"=>$subs["sub-off"]["player-name"],
@@ -402,6 +417,20 @@ class Optafeed extends Model
                                 "name"=>$subs["sub-on"]["player-name"]
                             ]);
                         $this->updateEvent($subs,$res["@attributes"]["game-id"],$res["away-team"]["team-id"]);
+                    } else {
+                        foreach ($res["away-team"]["substitutions"]["substitution"] as $subs) {
+                            $this->updatePlayer($subs["sub-off"]["player-code"],
+                                ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
+                                    "last_name"=>$subs["sub-off"]["player-name"],
+                                    "name"=>$subs["sub-off"]["player-name"]
+                                ]);
+                            $this->updatePlayer($subs["sub-on"]["player-code"],
+                                ["first_name"=>isset($subs["sub-on"]["player-firstname"]) ? $subs["sub-on"]["player-firstname"] : "",
+                                    "last_name"=>$subs["sub-on"]["player-name"],
+                                    "name"=>$subs["sub-on"]["player-name"]
+                                ]);
+                            $this->updateEvent($subs,$res["@attributes"]["game-id"],$res["away-team"]["team-id"]);
+                        }
                     }
                 }
             } else {
@@ -451,7 +480,8 @@ class Optafeed extends Model
                         }
                     }
                     if (isset($res2["home-team"]["substitutions"]["substitution"])) {
-                        foreach ($res2["home-team"]["substitutions"]["substitution"] as $subs) {
+                        if(isset($res2["home-team"]["substitutions"]["substitution"]["sub-off"])){
+                            $subs = $res2["home-team"]["substitutions"]["substitution"];
                             $this->updatePlayer($subs["sub-off"]["player-code"],
                                 ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
                                     "last_name"=>$subs["sub-off"]["player-name"],
@@ -463,11 +493,26 @@ class Optafeed extends Model
                                     "name"=>$subs["sub-on"]["player-name"]
                                 ]);
                             $this->updateEvent($subs,$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"]);
+                        } else {
+                            foreach ($res2["home-team"]["substitutions"]["substitution"] as $subs) {
+                                $this->updatePlayer($subs["sub-off"]["player-code"],
+                                    ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
+                                        "last_name"=>$subs["sub-off"]["player-name"],
+                                        "name"=>$subs["sub-off"]["player-name"]
+                                    ]);
+                                $this->updatePlayer($subs["sub-on"]["player-code"],
+                                    ["first_name"=>isset($subs["sub-on"]["player-firstname"]) ? $subs["sub-on"]["player-firstname"] : "",
+                                        "last_name"=>$subs["sub-on"]["player-name"],
+                                        "name"=>$subs["sub-on"]["player-name"]
+                                    ]);
+                                $this->updateEvent($subs,$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"]);
+                            }
                         }
                     }
 
                     if (isset($res2["away-team"]["substitutions"]["substitution"])) {
-                        foreach ($res2["away-team"]["substitutions"]["substitution"] as $subs) {
+                        if(isset($res2["away-team"]["substitutions"]["substitution"]["sub-off"])){
+                            $subs = $res2["away-team"]["substitutions"]["substitution"];
                             $this->updatePlayer($subs["sub-off"]["player-code"],
                                 ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
                                     "last_name"=>$subs["sub-off"]["player-name"],
@@ -479,6 +524,20 @@ class Optafeed extends Model
                                     "name"=>$subs["sub-on"]["player-name"]
                                 ]);
                             $this->updateEvent($subs,$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"]);
+                        } else {
+                            foreach ($res2["away-team"]["substitutions"]["substitution"] as $subs) {
+                                $this->updatePlayer($subs["sub-off"]["player-code"],
+                                    ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
+                                        "last_name"=>$subs["sub-off"]["player-name"],
+                                        "name"=>$subs["sub-off"]["player-name"]
+                                    ]);
+                                $this->updatePlayer($subs["sub-on"]["player-code"],
+                                    ["first_name"=>isset($subs["sub-on"]["player-firstname"]) ? $subs["sub-on"]["player-firstname"] : "",
+                                        "last_name"=>$subs["sub-on"]["player-name"],
+                                        "name"=>$subs["sub-on"]["player-name"]
+                                    ]);
+                                $this->updateEvent($subs,$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"]);
+                            }
                         }
                     }
                 }
@@ -532,7 +591,8 @@ class Optafeed extends Model
                         }
                     }
                     if (isset($res["home-team"]["substitutions"]["substitution"])) {
-                        foreach ($res["home-team"]["substitutions"]["substitution"] as $subs) {
+                        if(isset($res["home-team"]["substitutions"]["substitution"]["sub-off"])){
+                            $subs = $res["home-team"]["substitutions"]["substitution"];
                             $this->updatePlayer($subs["sub-off"]["player-code"],
                                 ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
                                     "last_name"=>$subs["sub-off"]["player-name"],
@@ -544,11 +604,26 @@ class Optafeed extends Model
                                     "name"=>$subs["sub-on"]["player-name"]
                                 ]);
                             $this->updateEvent($subs,$res["@attributes"]["game-id"],$res["home-team"]["team-id"]);
+                        } else {
+                            foreach ($res["home-team"]["substitutions"]["substitution"] as $subs) {
+                                $this->updatePlayer($subs["sub-off"]["player-code"],
+                                    ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
+                                        "last_name"=>$subs["sub-off"]["player-name"],
+                                        "name"=>$subs["sub-off"]["player-name"]
+                                    ]);
+                                $this->updatePlayer($subs["sub-on"]["player-code"],
+                                    ["first_name"=>isset($subs["sub-on"]["player-firstname"]) ? $subs["sub-on"]["player-firstname"] : "",
+                                        "last_name"=>$subs["sub-on"]["player-name"],
+                                        "name"=>$subs["sub-on"]["player-name"]
+                                    ]);
+                                $this->updateEvent($subs,$res["@attributes"]["game-id"],$res["home-team"]["team-id"]);
+                            }
                         }
                     }
 
                     if (isset($res["away-team"]["substitutions"]["substitution"])) {
-                        foreach ($res["away-team"]["substitutions"]["substitution"] as $subs) {
+                        if(isset($res["away-team"]["substitutions"]["substitution"]["sub-off"])){
+                            $subs = $res["away-team"]["substitutions"]["substitution"];
                             $this->updatePlayer($subs["sub-off"]["player-code"],
                                 ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
                                     "last_name"=>$subs["sub-off"]["player-name"],
@@ -560,6 +635,21 @@ class Optafeed extends Model
                                     "name"=>$subs["sub-on"]["player-name"]
                                 ]);
                             $this->updateEvent($subs,$res["@attributes"]["game-id"],$res["away-team"]["team-id"]);
+
+                        } else {
+                            foreach ($res["away-team"]["substitutions"]["substitution"] as $subs) {
+                                $this->updatePlayer($subs["sub-off"]["player-code"],
+                                    ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
+                                        "last_name"=>$subs["sub-off"]["player-name"],
+                                        "name"=>$subs["sub-off"]["player-name"]
+                                    ]);
+                                $this->updatePlayer($subs["sub-on"]["player-code"],
+                                    ["first_name"=>isset($subs["sub-on"]["player-firstname"]) ? $subs["sub-on"]["player-firstname"] : "",
+                                        "last_name"=>$subs["sub-on"]["player-name"],
+                                        "name"=>$subs["sub-on"]["player-name"]
+                                    ]);
+                                $this->updateEvent($subs,$res["@attributes"]["game-id"],$res["away-team"]["team-id"]);
+                            }
                         }
                     }
                 } else {
@@ -609,7 +699,8 @@ class Optafeed extends Model
                             }
                         }
                         if (isset($res2["home-team"]["substitutions"]["substitution"])) {
-                            foreach ($res2["home-team"]["substitutions"]["substitution"] as $subs) {
+                            if(isset($res2["home-team"]["substitutions"]["substitution"]["sub-off"])){
+                                $subs = $res2["home-team"]["substitutions"]["substitution"];
                                 $this->updatePlayer($subs["sub-off"]["player-code"],
                                     ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
                                         "last_name"=>$subs["sub-off"]["player-name"],
@@ -621,6 +712,20 @@ class Optafeed extends Model
                                         "name"=>$subs["sub-on"]["player-name"]
                                     ]);
                                 $this->updateEvent($subs,$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"]);
+                            } else {
+                                foreach ($res2["home-team"]["substitutions"]["substitution"] as $subs) {
+                                    $this->updatePlayer($subs["sub-off"]["player-code"],
+                                        ["first_name"=>isset($subs["sub-off"]["player-firstname"]) ? $subs["sub-off"]["player-firstname"] : "",
+                                            "last_name"=>$subs["sub-off"]["player-name"],
+                                            "name"=>$subs["sub-off"]["player-name"]
+                                        ]);
+                                    $this->updatePlayer($subs["sub-on"]["player-code"],
+                                        ["first_name"=>isset($subs["sub-on"]["player-firstname"]) ? $subs["sub-on"]["player-firstname"] : "",
+                                            "last_name"=>$subs["sub-on"]["player-name"],
+                                            "name"=>$subs["sub-on"]["player-name"]
+                                        ]);
+                                    $this->updateEvent($subs,$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"]);
+                                }
                             }
                         }
 
