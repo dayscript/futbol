@@ -69,7 +69,7 @@ class Tournament extends Model
      */
     public function optaplayers()
     {
-        return $this->belongsToMany('Dayscore\Opta\Player','opta_player_tournament','tournament_id','player_id')->withTimestamps();
+        return $this->belongsToMany('Dayscore\Opta\Player','opta_player_tournament','tournament_id','player_id')->withPivot('team_id', 'join_date','jersey_num','position','real_position')->withTimestamps();
     }
 
 }

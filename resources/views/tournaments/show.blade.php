@@ -15,6 +15,8 @@
     <hr>
     @if($option=="games")
         @include('tournaments.games')
+    @elseif($option=="players")
+        @include('tournaments.players')
     @else
         @include('tournaments.teams')
     @endif

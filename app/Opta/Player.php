@@ -37,6 +37,17 @@ class Player extends Model
         'join_date',
         'country'
     ];
+    public function image($teamid, $size="103x155")
+    {
+        $filename = "http://images.akamai.opta.net/football/player/".$teamid."_".$size."/".$this->id.".jpg";
+        return $filename;
+        $headers = @get_headers($filename);
+        if(strpos($headers[0],'200')===false){
+            return "/images/icons/player_".$size.".png";
+        } else {
+            return $filename;
+        }
 
+    }
 
 }

@@ -5,6 +5,9 @@
         <li class="nav-item">
             <a href="#" class="nav-link active">Partidos (Opta)</a>
         </li>
+        <li class="nav-item">
+            <a href="/tournaments/{{$tournament->id}}/players" class="nav-link">Jugadores (Opta)</a>
+        </li>
     </ul>
     <table class="table table-striped table-hover table-sm">
         <thead>
