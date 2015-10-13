@@ -95,9 +95,7 @@ class OptafeedsController extends Controller
     public function show(Optafeed $optafeed)
     {
         $content = Parser::xml($optafeed->content);
-
         return($content);
-//        return view('optafeeds.show',compact('optafeed','content'));
     }
 
     /**

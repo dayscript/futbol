@@ -4,7 +4,7 @@ namespace Dayscore\Opta;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Venue extends Model
+class Region extends Model
 {
 
     /**
@@ -12,12 +12,12 @@ class Venue extends Model
      *
      * @var string
      */
-    protected $table = 'opta_venues';
+    protected $table = 'opta_regions';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['id','name','city','capacity'];
+    protected $fillable = ['id','name'];
 }

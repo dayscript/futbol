@@ -19,7 +19,24 @@ class Player extends Model
      *
      * @var array
      */
-    protected $fillable = ['id','first_name','last_name','known'];
+    protected $fillable = ['id',
+        'first_name',
+        'last_name',
+        'name',
+        'known',
+        'birth_date',
+        'position',
+        'birth_place',
+        'first_nationality',
+        'preferred_foot',
+        'weight',
+        'height',
+        'jersey_num',
+        'real_position',
+        'real_position_side',
+        'join_date',
+        'country'
+    ];
 
 
 }

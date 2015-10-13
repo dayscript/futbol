@@ -17,7 +17,27 @@ class Team extends Model
      *
      * @var array
      */
-    protected $fillable = ['id','name'];
+    protected $fillable = ['id',
+        'name',
+        'code',
+        'city',
+        'country_id',
+        'region_id',
+        'postal_code',
+        'short_name',
+        'official_name',
+        'nickname',
+        'street',
+        'web',
+        'founded',
+        'color1',
+        'color2',
+        'email',
+        'fax',
+        'phone',
+        'fifa_rank',
+        'venue_id'
+    ];
 
     public function image($size)
     {
