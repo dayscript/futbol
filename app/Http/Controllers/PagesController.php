@@ -18,7 +18,7 @@ class PagesController extends Controller
     public function dashboard()
     {
         $users = User::all();
-        $optafeeds = Optafeed::all();
+        $optafeeds = Optafeed::latest();
         return view('pages.dashboard',compact('optafeeds','users'));
     }
 
