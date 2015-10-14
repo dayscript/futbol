@@ -19,7 +19,20 @@ class Game extends Model
      *
      * @var array
      */
-    protected $fillable = ['id','tournament_id'];
+    protected $fillable = ['id','tournament_id','status','period','date',
+        'timezone',
+        'match_type',
+        'match_day',
+        'match_winner',
+        'venue_id',
+        'city',
+        'home_team',
+        'home_halfscore',
+        'home_score',
+        'away_team',
+        'away_halfscore',
+        'away_score'
+    ];
 
     public function getDateAttribute( $date )
     {
