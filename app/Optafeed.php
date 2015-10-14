@@ -254,7 +254,7 @@ class Optafeed extends Model
     public function processF13($tournament, $content)
     {
         $gameid = $content["@attributes"]["game_id"];
-        $this->updateGame($gameid, $tournament);
+        $this->updateGame($gameid);
         foreach($content["message"] as $message){
             if(isset($message["@attributes"]["player_ref1"]))$this->updatePlayer($message["@attributes"]["player_ref1"]);
             if(isset($message["@attributes"]["player_ref2"]))$this->updatePlayer($message["@attributes"]["player_ref2"]);
@@ -340,8 +340,10 @@ class Optafeed extends Model
             if (isset($res["home-team"])) {
                 $this->updateTeam($res["home-team"]["team-id"], ["name"=>isset($res["home-team"]["team-name"]) ? $res["home-team"]["team-name"] : "","code"=>isset($res["home-team"]["team-code"]) ? $res["home-team"]["team-code"] : ""]);
                 $this->updateTeam($res["away-team"]["team-id"], ["name"=>isset($res["away-team"]["team-name"]) ? $res["away-team"]["team-name"] : "","code"=>isset($res["away-team"]["team-code"]) ? $res["away-team"]["team-code"] : ""]);
-                $this->updateGame($res["@attributes"]["game-id"], $tournament);
-
+                $options = [];
+                if(isset($res["@attributes"]["match-status"]))$options["status"] = $res["@attributes"]["match-status"];
+                if(isset($res["@attributes"]["period"]))$options["period"] = $res["@attributes"]["period"];
+                $this->updateGame($res["@attributes"]["game-id"],$options);
                 if (isset($res["home-team"]["scorers"])) {
                     if (isset($res["home-team"]["scorers"]["scorer"]["player-code"])) {
                         $scorer = $res["home-team"]["scorers"]["scorer"];
@@ -447,7 +449,10 @@ class Optafeed extends Model
                 foreach($res as $res2){
                     $this->updateTeam($res2["home-team"]["team-id"], ["name"=>isset($res2["home-team"]["team-name"]) ? $res2["home-team"]["team-name"] : "","code"=>isset($res2["home-team"]["team-code"]) ? $res2["home-team"]["team-code"] : ""]);
                     $this->updateTeam($res2["away-team"]["team-id"], ["name"=>isset($res2["away-team"]["team-name"]) ? $res2["away-team"]["team-name"] : "","code"=>isset($res2["away-team"]["team-code"]) ? $res2["away-team"]["team-code"] : ""]);
-                    $this->updateGame($res2["@attributes"]["game-id"], $tournament);
+                    $options = [];
+                    if(isset($res2["@attributes"]["match-status"]))$options["status"] = $res2["@attributes"]["match-status"];
+                    if(isset($res2["@attributes"]["period"]))$options["period"] = $res2["@attributes"]["period"];
+                    $this->updateGame($res2["@attributes"]["game-id"],$options);
 
                     if (isset($res2["home-team"]["scorers"])) {
                         if (isset($res2["home-team"]["scorers"]["scorer"]["player-code"])) {
@@ -558,7 +563,10 @@ class Optafeed extends Model
                 if (isset($res["home-team"])) {
                     $this->updateTeam($res["home-team"]["team-id"], ["name"=>isset($res["home-team"]["team-name"]) ? $res["home-team"]["team-name"] : "","code"=>isset($res["home-team"]["team-code"]) ? $res["home-team"]["team-code"] : ""]);
                     $this->updateTeam($res["away-team"]["team-id"], ["name"=>isset($res["away-team"]["team-name"]) ? $res["away-team"]["team-name"] : "","code"=>isset($res["away-team"]["team-code"]) ? $res["away-team"]["team-code"] : ""]);
-                    $this->updateGame($res["@attributes"]["game-id"], $tournament);
+                    $options = [];
+                    if(isset($res["@attributes"]["match-status"]))$options["status"] = $res["@attributes"]["match-status"];
+                    if(isset($res["@attributes"]["period"]))$options["period"] = $res["@attributes"]["period"];
+                    $this->updateGame($res["@attributes"]["game-id"],$options);
 
                     if (isset($res["home-team"]["scorers"])) {
                         if (isset($res["home-team"]["scorers"]["scorer"]["player-code"])) {
@@ -666,7 +674,10 @@ class Optafeed extends Model
                     foreach($res as $res2){
                         $this->updateTeam($res2["home-team"]["team-id"], ["name"=>isset($res2["home-team"]["team-name"]) ? $res2["home-team"]["team-name"] : "","code"=>isset($res2["home-team"]["team-code"]) ? $res2["home-team"]["team-code"] : ""]);
                         $this->updateTeam($res2["away-team"]["team-id"], ["name"=>isset($res2["away-team"]["team-name"]) ? $res2["away-team"]["team-name"] : "","code"=>isset($res2["away-team"]["team-code"]) ? $res2["away-team"]["team-code"] : ""]);
-                        $this->updateGame($res2["@attributes"]["game-id"], $tournament);
+                        $options = [];
+                        if(isset($res2["@attributes"]["match-status"]))$options["status"] = $res2["@attributes"]["match-status"];
+                        if(isset($res2["@attributes"]["period"]))$options["period"] = $res2["@attributes"]["period"];
+                        $this->updateGame($res2["@attributes"]["game-id"],$options);
 
                         if (isset($res2["home-team"]["scorers"])) {
                             if (isset($res2["home-team"]["scorers"]["scorer"]["player-code"])) {
@@ -959,13 +970,15 @@ class Optafeed extends Model
         $venue->update($options);
     }
 
-    public function updateGame($gameid,$tournament = null)
+    public function updateGame($gameid,$options = [])
     {
+        $tournament = $this->tournament();
         $game = Game::findOrNew($gameid);
         if (!$game->id) {
             $game->id = $gameid;
             Toastr::success($gameid,"Partido Opta Creado");
         }
+        $game->update($options);
         if ($tournament) {
             $tournament->optagames()->save($game);
         }
