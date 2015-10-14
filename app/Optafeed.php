@@ -272,71 +272,59 @@ class Optafeed extends Model
         // Procesar equipos
         foreach ($content["Team"] as $row) {
             $teamid = str_replace("t", "", $row["@attributes"]["uID"]);
-            $team = Team::findOrNew($teamid);
-            if (!$team->id) {
-                $team->id = $teamid;
-                $team->name = $row["Name"];
-                $team->save();
-                Toastr::success($row["Name"], "Equipo Opta Creado");
-            }
-            if ($tournament) {
-                $tournament->optateams()->detach($team->id);
-                $tournament->optateams()->attach($team->id);
-            }
+            $options = [];
+            $options["name"] =$row["Name"];
+            $this->updateTeam($teamid,$options);
         }
         // Procesar partidos
         foreach ($content["MatchData"] as $match) {
-            $gameid = str_replace("g", "", $match["@attributes"]["uID"]);
-            $game = Game::findOrNew($gameid);
-            if (!$game->id) {
-                $game->id = $gameid;
-                Toastr::success("Se ha creado el juego opta: " . $gameid);
-            }
-            $game->date = $match["MatchInfo"]["Date"];
-            $game->timezone = $match["MatchInfo"]["TZ"];
-            $game->match_type = $match["MatchInfo"]["@attributes"]["MatchType"];
-            $game->match_day = $match["MatchInfo"]["@attributes"]["MatchDay"];
-            $game->period = $match["MatchInfo"]["@attributes"]["Period"];
-            if($game->period == "FullTime"){
-                $game->status = "FULL";
-            } else if($game->period == "Live"){
-                $game->status = "LIVE";
-            } else if($game->period == "PreMatch"){
-                $game->status = "PRE-MATCH";
-            }
-            if (isset($match["Stat"])) {
-                $game->city = $match["Stat"][1];
-            }
+
             if (isset($match["MatchInfo"]["@attributes"]["Venue_id"])) {
                 $venueid = $match["MatchInfo"]["@attributes"]["Venue_id"];
-                $venue = Venue::firstOrCreate(["id" => $venueid]);
-                if (!$venue->name && isset($match["Stat"]) && count($match["Stat"]) >= 2) {
-                    $venue->name = $match["Stat"][0];
-                    $venue->city = $match["Stat"][1];
-                    $venue->save();
-                }
-                $game->venue_id = $venueid;
+                $options = [];
+                if(isset($match["Stat"][0]))$options["name"] = $match["Stat"][0];
+                if(isset($match["Stat"][1]))$options["city"] = $match["Stat"][1];
+                $this->updateVenue($venueid,$options);
             }
-            if (isset($match["MatchInfo"]["@attributes"]["MatchWinner"]))
-                $game->match_winner = str_replace("t", "", $match["MatchInfo"]["@attributes"]["MatchWinner"]);
+            $gameid = str_replace("g", "", $match["@attributes"]["uID"]);
+            $options = [];
+            $options["date"] = $match["MatchInfo"]["Date"];
+            $options["timezone"] = $match["MatchInfo"]["TZ"];
+            $options["match_type"] = $match["MatchInfo"]["@attributes"]["MatchType"];
+            $options["match_day"] = $match["MatchInfo"]["@attributes"]["MatchDay"];
+            $options["period"] = $match["MatchInfo"]["@attributes"]["Period"];
+            if(isset($match["MatchInfo"]["@attributes"]["RoundNumber"]))$options["round_number"] = $match["MatchInfo"]["@attributes"]["RoundNumber"];
+            if(isset($match["MatchInfo"]["@attributes"]["RoundType"]))$options["round_type"] = $match["MatchInfo"]["@attributes"]["RoundType"];
+            if(isset($match["MatchInfo"]["@attributes"]["GroupName"]))$options["group_name"] = $match["MatchInfo"]["@attributes"]["GroupName"];
+            if(isset($match["MatchInfo"]["@attributes"]["NextMatch"]))$options["next_match"] = $match["MatchInfo"]["@attributes"]["NextMatch"];
+            if(isset($match["MatchInfo"]["@attributes"]["NextMatchLoser"]))$options["next_match_loser"] = $match["MatchInfo"]["@attributes"]["NextMatchLoser"];
+            if($options["period"] == "FullTime"){
+                $options["status"] = "FULL";
+            } else if($options["period"] == "Live"){
+                $options["status"] = "LIVE";
+            } else if($options["period"] == "PreMatch"){
+                $options["status"] = "PRE-MATCH";
+            }
+            if (isset($match["Stat"]))$options["city"] = $match["Stat"][1];
+            if (isset($match["MatchInfo"]["@attributes"]["Venue_id"]))$options["venue_id"] = $match["MatchInfo"]["@attributes"]["Venue_id"];
+            if (isset($match["MatchInfo"]["@attributes"]["MatchWinner"]))$options["match_winner"] = str_replace("t", "", $match["MatchInfo"]["@attributes"]["MatchWinner"]);
+
             if ($match["TeamData"][0]["@attributes"]["Side"] == "Home") {
-                $game->home_team = str_replace("t", "", $match["TeamData"][0]["@attributes"]["TeamRef"]);
-                $game->home_halfscore = isset($match["TeamData"][0]["@attributes"]["HalfScore"]) ? $match["TeamData"][0]["@attributes"]["HalfScore"] : 0;
-                $game->home_score = isset($match["TeamData"][0]["@attributes"]["Score"]) ? $match["TeamData"][0]["@attributes"]["Score"] : 0;
-                $game->away_team = str_replace("t", "", $match["TeamData"][1]["@attributes"]["TeamRef"]);
-                $game->away_halfscore = isset($match["TeamData"][1]["@attributes"]["HalfScore"]) ? $match["TeamData"][1]["@attributes"]["HalfScore"] : 0;
-                $game->away_score = isset($match["TeamData"][1]["@attributes"]["Score"]) ? $match["TeamData"][1]["@attributes"]["Score"] : 0;
+                $options["home_team"] = str_replace("t", "", $match["TeamData"][0]["@attributes"]["TeamRef"]);
+                $options["home_halfscore"] = isset($match["TeamData"][0]["@attributes"]["HalfScore"]) ? $match["TeamData"][0]["@attributes"]["HalfScore"] : 0;
+                $options["home_score"] = isset($match["TeamData"][0]["@attributes"]["Score"]) ? $match["TeamData"][0]["@attributes"]["Score"] : 0;
+                $options["away_team"] = str_replace("t", "", $match["TeamData"][1]["@attributes"]["TeamRef"]);
+                $options["away_halfscore"] = isset($match["TeamData"][1]["@attributes"]["HalfScore"]) ? $match["TeamData"][1]["@attributes"]["HalfScore"] : 0;
+                $options["away_score"] = isset($match["TeamData"][1]["@attributes"]["Score"]) ? $match["TeamData"][1]["@attributes"]["Score"] : 0;
             } else {
-                $game->home_team = str_replace("t", "", $match["TeamData"][1]["@attributes"]["TeamRef"]);
-                $game->home_halfscore = isset($match["TeamData"][1]["@attributes"]["HalfScore"]) ? $match["TeamData"][1]["@attributes"]["HalfScore"] : 0;
-                $game->home_score = isset($match["TeamData"][1]["@attributes"]["Score"]) ? $match["TeamData"][1]["@attributes"]["Score"] : 0;
-                $game->away_team = str_replace("t", "", $match["TeamData"][0]["@attributes"]["TeamRef"]);
-                $game->away_halfscore = isset($match["TeamData"][0]["@attributes"]["HalfScore"]) ? $match["TeamData"][0]["@attributes"]["HalfScore"] : 0;
-                $game->away_score = isset($match["TeamData"][0]["@attributes"]["Score"]) ? $match["TeamData"][0]["@attributes"]["Score"] : 0;
+                $options["home_team"] = str_replace("t", "", $match["TeamData"][1]["@attributes"]["TeamRef"]);
+                $options["home_halfscore"] = isset($match["TeamData"][1]["@attributes"]["HalfScore"]) ? $match["TeamData"][1]["@attributes"]["HalfScore"] : 0;
+                $options["home_score"] = isset($match["TeamData"][1]["@attributes"]["Score"]) ? $match["TeamData"][1]["@attributes"]["Score"] : 0;
+                $options["away_team"] = str_replace("t", "", $match["TeamData"][0]["@attributes"]["TeamRef"]);
+                $options["away_halfscore"] = isset($match["TeamData"][0]["@attributes"]["HalfScore"]) ? $match["TeamData"][0]["@attributes"]["HalfScore"] : 0;
+                $options["away_score"] = isset($match["TeamData"][0]["@attributes"]["Score"]) ? $match["TeamData"][0]["@attributes"]["Score"] : 0;
             }
-            if ($tournament) {
-                $tournament->optagames()->save($game);
-            }
+            $this->updateGame($gameid,$options);
         }
     }
 
@@ -938,6 +926,7 @@ class Optafeed extends Model
 
     public function updateTeam($teamid, $options = [])
     {
+        $tournament = $this->tournament();
         $team = Team::findOrNew($teamid);
         if (!$team->id) {
             $team->id = $teamid;
@@ -945,6 +934,11 @@ class Optafeed extends Model
             Toastr::success($teamid, "Equipo Opta Creado");
         }
         $team->update($options);
+        if ($tournament) {
+            $tournament->optateams()->detach($teamid);
+            $tournament->optateams()->attach($teamid);
+        }
+
     }
 
     public function updateCountry($countryid, $options = [])
