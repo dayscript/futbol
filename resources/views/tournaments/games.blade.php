@@ -15,7 +15,6 @@
             <th>ID</th>
             <th>Fecha</th>
             <th class="text-center">Score</th>
-            <th>Periodo</th>
             <th>Estado</th>
             <th>Opciones</th>
         </tr>
@@ -30,8 +29,11 @@
                     <div class="col-md-2 text-center">{{$game->home_score}} - {{$game->away_score}}</div>
                     <div class="col-md-5 text-left">{{($game->away)?$game->away->name:""}}</div>
                 </td>
-                <td class="{{($game->period=="FullTime")?"table-info":""}}">{{$game->period}}</td>
-                <td>{{$game->status}}</td>
+                <td class="{{($game->period=="FullTime")?"table-info":""}}">
+                    {{$game->status}}<br>
+                    <small>{{$game->period}}</small>
+                </td>
+                <td></td>
                 <td>
                     <a class="btn btn-info btn-sm" href="/optagames/{{$game->id}}/details"><i class="fa fa-futbol-o"></i> Detalles</a>
                     @if(count($game->events)>0)

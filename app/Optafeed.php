@@ -297,6 +297,13 @@ class Optafeed extends Model
             $game->match_type = $match["MatchInfo"]["@attributes"]["MatchType"];
             $game->match_day = $match["MatchInfo"]["@attributes"]["MatchDay"];
             $game->period = $match["MatchInfo"]["@attributes"]["Period"];
+            if($game->period == "FullTime"){
+                $game->status = "FULL";
+            } else if($game->period == "Live"){
+                $game->status = "LIVE";
+            } else if($game->period == "PreMatch"){
+                $game->status = "PRE-MATCH";
+            }
             if (isset($match["Stat"])) {
                 $game->city = $match["Stat"][1];
             }
@@ -343,6 +350,7 @@ class Optafeed extends Model
                 $options = [];
                 if(isset($res["@attributes"]["match-status"]))$options["status"] = $res["@attributes"]["match-status"];
                 if(isset($res["@attributes"]["period"]))$options["period"] = $res["@attributes"]["period"];
+
                 $this->updateGame($res["@attributes"]["game-id"],$options);
                 if (isset($res["home-team"]["scorers"])) {
                     if (isset($res["home-team"]["scorers"]["scorer"]["player-code"])) {
