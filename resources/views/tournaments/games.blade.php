@@ -23,7 +23,9 @@
         @foreach($tournament->optagames as $game)
             <tr class="">
                 <td>{{$game->id}}</td>
-                <td>{{$game->date}}</td>
+                <td>{{$game->date}}<br>
+                    <small>{{$game->round_type}}: {{$game->round_number}}</small>
+                </td>
                 <td class="row">
                     <div class="col-md-5 text-right">{{($game->home)?$game->home->name:""}}</div>
                     <div class="col-md-2 text-center">{{$game->home_score}} - {{$game->away_score}}</div>
