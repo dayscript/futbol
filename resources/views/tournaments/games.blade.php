@@ -35,7 +35,6 @@
                     {{$game->status}}<br>
                     <small>{{$game->period}}</small>
                 </td>
-                <td></td>
                 <td>
                     <a class="btn btn-info btn-sm" href="/optagames/{{$game->id}}/details"><i class="fa fa-futbol-o"></i> Detalles</a>
                     @if(count($game->events)>0)
