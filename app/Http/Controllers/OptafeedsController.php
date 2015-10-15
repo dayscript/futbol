@@ -27,10 +27,24 @@ class OptafeedsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $optafeeds = Optafeed::latest()->paginate(15);
-        return view('optafeeds.index', compact('optafeeds'));
+        $tournaments = Tournament::all();
+        $type = $request->get('type','');
+        $tournament = $request->get('tournament','');
+        if($type && $tournament) {
+            $tournament_obj = Tournament::findOrNew($tournament);
+            $optafeeds = Optafeed::latest()->where('feedType', $type)->where('competitionId', $tournament_obj->opta_id)->where('seasonId', $tournament_obj->opta_season)->paginate(15);
+        } else if($type){
+            $optafeeds = Optafeed::latest()->where('feedType', $type)->paginate(15);
+        } else if($tournament){
+            $tournament_obj = Tournament::findOrNew($tournament);
+            $optafeeds = Optafeed::latest()->where('competitionId', $tournament_obj->opta_id)->where('seasonId', $tournament_obj->opta_season)->paginate(15);
+        } else {
+            $optafeeds = Optafeed::latest()->paginate(15);
+        }
+
+        return view('optafeeds.index', compact('optafeeds','type','tournament','tournaments'));
     }
 
     /**

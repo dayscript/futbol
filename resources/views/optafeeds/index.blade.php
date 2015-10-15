@@ -7,8 +7,23 @@
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th>Tipo</th>
-                <th>Torneo</th>
+                <th>Tipo <br>
+                    <select name="type" id="type" onchange="document.location.href='/optafeeds/?tournament={{$tournament}}&type='+this.options[this.selectedIndex].value;">
+                        <option {{$type==""?"selected":""}} value="">Todos</option>
+                        <option {{$type=="F1"?"selected":""}} value="F1">Fixtures & results</option>
+                        <option {{$type=="F26"?"selected":""}} value="F26">Live Scores</option>
+                        <option {{$type=="F13"?"selected":""}} value="F13">Commentary Feed</option>
+                        <option {{$type=="F40"?"selected":""}} value="F40">Squads Feed</option>
+                    </select>
+                </th>
+                <th>Torneo <br>
+                    <select name="tournament" id="tournament" onchange="document.location.href='/optafeeds/?type={{$type}}&tournament='+this.options[this.selectedIndex].value;">
+                        <option {{$tournament==""?"selected":""}} value="">Todos</option>
+                        @foreach($tournaments as $tour)
+                            <option {{$tournament==$tour->id?"selected":""}} value="{{$tour->id}}">{{$tour->name}}</option>
+                        @endforeach
+                    </select>
+                </th>
                 <th>Recibido / Procesado</th>
                 <th>Opciones</th>
             </tr>

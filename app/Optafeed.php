@@ -330,9 +330,22 @@ class Optafeed extends Model
 
     public function processF26($tournament, $content)
     {
+
         if (isset($content["content.item"]["content.body"]["results"]["result"])) {
             $res = $content["content.item"]["content.body"]["results"]["result"];
             if (isset($res["home-team"])) {
+                if (isset($res["home-team"]["bookings"]["yellow-card"])) {
+                    $this->updateBooking($res["home-team"]["bookings"]["yellow-card"],$res["@attributes"]["game-id"],$res["home-team"]["team-id"],"yellow-card");
+                }
+                if (isset($res["home-team"]["bookings"]["red-card"])) {
+                    $this->updateBooking($res["home-team"]["bookings"]["red-card"],$res["@attributes"]["game-id"],$res["home-team"]["team-id"],"red-card");
+                }
+                if (isset($res["away-team"]["bookings"]["yellow-card"])) {
+                    $this->updateBooking($res["away-team"]["bookings"]["yellow-card"],$res["@attributes"]["game-id"],$res["away-team"]["team-id"],"yellow-card");
+                }
+                if (isset($res["away-team"]["bookings"]["red-card"])) {
+                    $this->updateBooking($res["away-team"]["bookings"]["red-card"],$res["@attributes"]["game-id"],$res["away-team"]["team-id"],"red-card");
+                }
                 $this->updateTeam($res["home-team"]["team-id"], ["name"=>isset($res["home-team"]["team-name"]) ? $res["home-team"]["team-name"] : "","code"=>isset($res["home-team"]["team-code"]) ? $res["home-team"]["team-code"] : ""]);
                 $this->updateTeam($res["away-team"]["team-id"], ["name"=>isset($res["away-team"]["team-name"]) ? $res["away-team"]["team-name"] : "","code"=>isset($res["away-team"]["team-code"]) ? $res["away-team"]["team-code"] : ""]);
                 $options = [];
@@ -443,6 +456,18 @@ class Optafeed extends Model
                 }
             } else {
                 foreach($res as $res2){
+                    if (isset($res2["home-team"]["bookings"]["yellow-card"])) {
+                        $this->updateBooking($res2["home-team"]["bookings"]["yellow-card"],$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"],"yellow-card");
+                    }
+                    if (isset($res2["home-team"]["bookings"]["red-card"])) {
+                        $this->updateBooking($res2["home-team"]["bookings"]["red-card"],$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"],"red-card");
+                    }
+                    if (isset($res2["away-team"]["bookings"]["yellow-card"])) {
+                        $this->updateBooking($res2["away-team"]["bookings"]["yellow-card"],$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"],"yellow-card");
+                    }
+                    if (isset($res2["away-team"]["bookings"]["red-card"])) {
+                        $this->updateBooking($res2["away-team"]["bookings"]["red-card"],$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"],"red-card");
+                    }
                     $this->updateTeam($res2["home-team"]["team-id"], ["name"=>isset($res2["home-team"]["team-name"]) ? $res2["home-team"]["team-name"] : "","code"=>isset($res2["home-team"]["team-code"]) ? $res2["home-team"]["team-code"] : ""]);
                     $this->updateTeam($res2["away-team"]["team-id"], ["name"=>isset($res2["away-team"]["team-name"]) ? $res2["away-team"]["team-name"] : "","code"=>isset($res2["away-team"]["team-code"]) ? $res2["away-team"]["team-code"] : ""]);
                     $options = [];
@@ -557,6 +582,18 @@ class Optafeed extends Model
             foreach ($content["content.item"]["content.body"]["results"] as $row) {
                 $res = $row["result"];
                 if (isset($res["home-team"])) {
+                    if (isset($res["home-team"]["bookings"]["yellow-card"])) {
+                        $this->updateBooking($res["home-team"]["bookings"]["yellow-card"],$res["@attributes"]["game-id"],$res["home-team"]["team-id"],"yellow-card");
+                    }
+                    if (isset($res["home-team"]["bookings"]["red-card"])) {
+                        $this->updateBooking($res["home-team"]["bookings"]["red-card"],$res["@attributes"]["game-id"],$res["home-team"]["team-id"],"red-card");
+                    }
+                    if (isset($res["away-team"]["bookings"]["yellow-card"])) {
+                        $this->updateBooking($res["away-team"]["bookings"]["yellow-card"],$res["@attributes"]["game-id"],$res["away-team"]["team-id"],"yellow-card");
+                    }
+                    if (isset($res["away-team"]["bookings"]["red-card"])) {
+                        $this->updateBooking($res["away-team"]["bookings"]["red-card"],$res["@attributes"]["game-id"],$res["away-team"]["team-id"],"red-card");
+                    }
                     $this->updateTeam($res["home-team"]["team-id"], ["name"=>isset($res["home-team"]["team-name"]) ? $res["home-team"]["team-name"] : "","code"=>isset($res["home-team"]["team-code"]) ? $res["home-team"]["team-code"] : ""]);
                     $this->updateTeam($res["away-team"]["team-id"], ["name"=>isset($res["away-team"]["team-name"]) ? $res["away-team"]["team-name"] : "","code"=>isset($res["away-team"]["team-code"]) ? $res["away-team"]["team-code"] : ""]);
                     $options = [];
@@ -668,6 +705,19 @@ class Optafeed extends Model
                     }
                 } else {
                     foreach($res as $res2){
+                        if (isset($res2["home-team"]["bookings"]["yellow-card"])) {
+                            $this->updateBooking($res2["home-team"]["bookings"]["yellow-card"],$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"],"yellow-card");
+                        }
+                        if (isset($res2["home-team"]["bookings"]["red-card"])) {
+                            $this->updateBooking($res2["home-team"]["bookings"]["red-card"],$res2["@attributes"]["game-id"],$res2["home-team"]["team-id"],"red-card");
+                        }
+                        if (isset($res2["away-team"]["bookings"]["yellow-card"])) {
+                            $this->updateBooking($res2["away-team"]["bookings"]["yellow-card"],$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"],"yellow-card");
+                        }
+                        if (isset($res2["away-team"]["bookings"]["red-card"])) {
+                            $this->updateBooking($res2["away-team"]["bookings"]["red-card"],$res2["@attributes"]["game-id"],$res2["away-team"]["team-id"],"red-card");
+                        }
+
                         $this->updateTeam($res2["home-team"]["team-id"], ["name"=>isset($res2["home-team"]["team-name"]) ? $res2["home-team"]["team-name"] : "","code"=>isset($res2["home-team"]["team-code"]) ? $res2["home-team"]["team-code"] : ""]);
                         $this->updateTeam($res2["away-team"]["team-id"], ["name"=>isset($res2["away-team"]["team-name"]) ? $res2["away-team"]["team-name"] : "","code"=>isset($res2["away-team"]["team-code"]) ? $res2["away-team"]["team-code"] : ""]);
                         $options = [];
@@ -779,6 +829,71 @@ class Optafeed extends Model
                     }
                 }
 
+            }
+        }
+    }
+
+    public function updateBooking($data=[], $gameid=null, $teamid=null, $type="yellow-card")
+    {
+        if(isset($data["@attributes"])){
+            $eventid = $data["@attributes"]["event_id"];
+            $event = Event::findOrNew($eventid);
+            if(!$event->id){
+                $event->id = $eventid;
+                $event->type = $type;
+                $event->save();
+                Toastr::success($eventid, "Evento Opta Creado");
+            }
+            $options = [];
+            if(isset($data["player-code"]))$playerid = $data["player-code"];
+            else if(isset($data["@attributes"]["id"]))$playerid = $data["@attributes"]["id"];
+            if(isset($data["player-firstname"]))$options["first_name"] = $data["player-firstname"];
+            else if(isset($data["@attributes"]["first"]))$options["first_name"] = $data["@attributes"]["first"];
+            if(isset($data["player-name"]))$options["last_name"] = $data["player-name"];
+            else if(isset($data["@attributes"]["last"]))$options["last_name"] = $data["@attributes"]["last"];
+            $this->updatePlayer($playerid,$options);
+
+            $options = [];
+            $options["game_id"] = $gameid;
+            $options["team_id"] = $teamid;
+            $options["player_id"] = $playerid;
+            $options["minute"] =$data["@attributes"]["min"];
+            $options["second"] =$data["@attributes"]["sec"];
+            $options["time"] =$data["@attributes"]["time"];
+            $options["datetime"] =$data["@attributes"]["timestamp"];
+            $options["period"] =$data["@attributes"]["period"];
+            if($type=="red-card" && isset($data["@attributes"]["type"]))$options["red_card_type"] = $data["@attributes"]["type"];
+            $event->update($options);
+        } else {
+            foreach($data as $res){
+                $eventid = $res["@attributes"]["event_id"];
+                $event = Event::findOrNew($eventid);
+                if(!$event->id){
+                    $event->id = $eventid;
+                    $event->type = $type;
+                    $event->save();
+                    Toastr::success($eventid, "Evento Opta Creado");
+                }
+                $options = [];
+                if(isset($res["player-code"]))$playerid = $res["player-code"];
+                else if(isset($res["@attributes"]["id"]))$playerid = $res["@attributes"]["id"];
+                if(isset($res["player-firstname"]))$options["first_name"] = $res["player-firstname"];
+                else if(isset($res["@attributes"]["first"]))$options["first_name"] = $res["@attributes"]["first"];
+                if(isset($res["player-name"]))$options["last_name"] = $res["player-name"];
+                else if(isset($res["@attributes"]["last"]))$options["last_name"] = $res["@attributes"]["last"];
+                $this->updatePlayer($playerid,$options);
+
+                $options = [];
+                $options["game_id"] = $gameid;
+                $options["team_id"] = $teamid;
+                $options["player_id"] = $playerid;
+                $options["minute"] =$res["@attributes"]["min"];
+                $options["second"] =$res["@attributes"]["sec"];
+                $options["time"] =$res["@attributes"]["time"];
+                $options["datetime"] =$res["@attributes"]["timestamp"];
+                $options["period"] =$res["@attributes"]["period"];
+                if($type=="red-card" && isset($res["@attributes"]["type"]))$options["red_card_type"] = res["@attributes"]["type"];
+                $event->update($options);
             }
         }
     }

@@ -17,7 +17,25 @@ class Event extends Model
      *
      * @var array
      */
-    protected $fillable = ['id','type'];
+    protected $fillable = [
+        'id',
+        'type',
+        'game_id',
+        'minute',
+        'second',
+        'time',
+        'datetime',
+        'period',
+        'goal_type',
+        'red_card_type',
+        'player_id',
+        'team_id',
+        'sub_reason',
+        'sub_on_player_id',
+        'comment',
+        'comment_type',
+        'comment_player_ref2'
+    ];
 
     /**
      *
