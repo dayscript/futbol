@@ -892,7 +892,7 @@ class Optafeed extends Model
                 $options["time"] =$res["@attributes"]["time"];
                 $options["datetime"] =$res["@attributes"]["timestamp"];
                 $options["period"] =$res["@attributes"]["period"];
-                if($type=="red-card" && isset($res["@attributes"]["type"]))$options["red_card_type"] = res["@attributes"]["type"];
+                if($type=="red-card" && isset($res["@attributes"]["type"]))$options["red_card_type"] = $res["@attributes"]["type"];
                 $event->update($options);
             }
         }
