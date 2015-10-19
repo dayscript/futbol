@@ -351,6 +351,8 @@ class Optafeed extends Model
                 $options = [];
                 if(isset($res["@attributes"]["match-status"]))$options["status"] = $res["@attributes"]["match-status"];
                 if(isset($res["@attributes"]["period"]))$options["period"] = $res["@attributes"]["period"];
+                if(isset($res["home-team"]["score"]))$options["home_score"] = $res["home-team"]["score"];
+                if(isset($res["away-team"]["score"]))$options["away_score"] = $res["away-team"]["score"];
 
                 $this->updateGame($res["@attributes"]["game-id"],$options);
                 if (isset($res["home-team"]["scorers"])) {
@@ -473,6 +475,8 @@ class Optafeed extends Model
                     $options = [];
                     if(isset($res2["@attributes"]["match-status"]))$options["status"] = $res2["@attributes"]["match-status"];
                     if(isset($res2["@attributes"]["period"]))$options["period"] = $res2["@attributes"]["period"];
+                    if(isset($res2["home-team"]["score"]))$options["home_score"] = $res2["home-team"]["score"];
+                    if(isset($res2["away-team"]["score"]))$options["away_score"] = $res2["away-team"]["score"];
                     $this->updateGame($res2["@attributes"]["game-id"],$options);
 
                     if (isset($res2["home-team"]["scorers"])) {
@@ -599,6 +603,8 @@ class Optafeed extends Model
                     $options = [];
                     if(isset($res["@attributes"]["match-status"]))$options["status"] = $res["@attributes"]["match-status"];
                     if(isset($res["@attributes"]["period"]))$options["period"] = $res["@attributes"]["period"];
+                    if(isset($res["home-team"]["score"]))$options["home_score"] = $res["home-team"]["score"];
+                    if(isset($res["away-team"]["score"]))$options["away_score"] = $res["away-team"]["score"];
                     $this->updateGame($res["@attributes"]["game-id"],$options);
 
                     if (isset($res["home-team"]["scorers"])) {
@@ -723,6 +729,8 @@ class Optafeed extends Model
                         $options = [];
                         if(isset($res2["@attributes"]["match-status"]))$options["status"] = $res2["@attributes"]["match-status"];
                         if(isset($res2["@attributes"]["period"]))$options["period"] = $res2["@attributes"]["period"];
+                        if(isset($res2["home-team"]["score"]))$options["home_score"] = $res2["home-team"]["score"];
+                        if(isset($res2["away-team"]["score"]))$options["away_score"] = $res2["away-team"]["score"];
                         $this->updateGame($res2["@attributes"]["game-id"],$options);
 
                         if (isset($res2["home-team"]["scorers"])) {
