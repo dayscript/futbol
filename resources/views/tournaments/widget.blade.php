@@ -48,7 +48,7 @@
                         Primer Tiempo
                     @elseif($game->period == "Second Half")
                         Segundo Tiempo
-                    @elseif($game->period == "FullTime")
+                    @elseif($game->period == "FullTime" || $game->period == "Full Time")
                         Finalizado
                     @else
                         {{$game->hour()}}
