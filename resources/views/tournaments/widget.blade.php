@@ -17,7 +17,7 @@
             ?>
             <div class="date">{{$inidate}}</div>
         @endif
-    <div class="match {{($game->status=="LIVE")?"started":($game->status=="FULL"?"ended":"not_started")}} match_{{$game->id}}" onclick="">
+    <div class="match {{($game->status=="LIVE" || $game->status=="HALF-TIME")?"started":($game->status=="FULL"?"ended":"not_started")}} match_{{$game->id}}" onclick="">
         <div class="info-match" style="height: 25px;">
             <div class="local" style="height: 25px;">
                 <div class="local-image" style="display: inline-block;height: 25px">
@@ -25,9 +25,9 @@
                 </div>
                 <div class="local-name" style="display: inline-block;height: 25px; width:63px;vertical-align: middle;">{{$game->home->name}}</div>
             </div>
-            <div class="go-match">
-                <img src="http://www.winsports.co/sites/all/themes/at_winsports/images/bullet_widget_result.png" alt="Ir" title="Ir" />
-            </div>
+            {{--<div class="go-match">--}}
+                {{--<img src="http://www.winsports.co/sites/all/themes/at_winsports/images/bullet_widget_result.png" alt="Ir" title="Ir" />--}}
+            {{--</div>--}}
             <div class="visit" style="height: 25px;">
                 <div class="away-name" style="display: inline-block;height: 25px; width:63px;vertical-align: middle;">{{$game->away->name}}</div>
                 <div class="away-image" style="display: inline-block;height: 25px">
@@ -41,7 +41,19 @@
         </div>
         <div class="info-broad">
             <div class="time">
-                <a class="" href="">{{$game->hour()}}</a>
+                <a class="" href="">
+                    @if($game->period == "Half Time")
+                        Medio Tiempo
+                    @elseif($game->period == "First Half")
+                        Primer Tiempo
+                    @elseif($game->period == "Second Half")
+                        Segundo Tiempo
+                    @elseif($game->period == "FullTime")
+                        Finalizado
+                    @else
+                        {{$game->hour()}}
+                    @endif
+                </a>
             </div>
         </div>
     </div>
