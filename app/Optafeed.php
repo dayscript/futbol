@@ -170,7 +170,7 @@ class Optafeed extends Model
             $this->processF26($tournament, $content);
             $this->processed = date("Y-m-d H:i:s");
             $this->save();
-            $tournament->updatewidget();
+            if($tournament->id == 150946)$tournament->updatewidget();
         } else if ($this->feedType == "F13") {
             $this->processF13($tournament, $content);
             $this->processed = date("Y-m-d H:i:s");
