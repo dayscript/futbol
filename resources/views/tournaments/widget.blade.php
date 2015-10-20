@@ -17,7 +17,7 @@
             ?>
             <div class="date">{{$inidate}}</div>
         @endif
-    <div class="match {{($game->status=="LIVE" || $game->status=="HALF-TIME" && $game->period != "Full Time")?"started":($game->status=="FULL" || $game->period=="Full Time"?"ended":"not_started")}} match_{{$game->id}}" onclick="">
+    <div class="match {{(($game->status=="LIVE" || $game->status=="HALF-TIME") && $game->period != "Full Time")?"started":($game->status=="FULL" || $game->period=="Full Time"?"ended":"not_started")}} match_{{$game->id}}" onclick="">
         <div class="info-match" style="height: 25px;">
             <div class="local" style="height: 25px;">
                 <div class="local-image" style="display: inline-block;height: 25px">
