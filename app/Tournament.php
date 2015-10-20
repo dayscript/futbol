@@ -4,6 +4,8 @@ namespace Dayscore;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\View;
 
 class Tournament extends Model
 {
@@ -51,7 +53,8 @@ class Tournament extends Model
      */
     public function optagames()
     {
-        return $this->hasMany( 'Dayscore\Opta\Game' )->orderBy('date','desc');
+        return $this->hasMany( 'Dayscore\Opta\Game' )->orderBy('date','asc');
+//        return $this->hasMany( 'Dayscore\Opta\Game' )->orderBy('date','desc');
     }
 
     /**
@@ -70,6 +73,17 @@ class Tournament extends Model
     public function optaplayers()
     {
         return $this->belongsToMany('Dayscore\Opta\Player','opta_player_tournament','tournament_id','player_id')->withPivot('team_id', 'join_date','jersey_num','position','real_position')->withTimestamps();
+    }
+
+    public function updatewidget()
+    {
+        $tournament = $this;
+        $dates = ["2015-10-20","2015-10-21"];
+        $view = View::make('tournaments.widget',compact('tournament','dates'));
+        $content = $view->render();
+        Storage::disk('s3')->put('/resultswidget/150946_0.txt',$content);
+        Storage::disk('s3')->setVisibility('/resultswidget/150946_0.txt', 'public');
+//        return $content;
     }
 
 }

@@ -64,10 +64,10 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key'    => 'your-key',
-            'secret' => 'your-secret',
-            'region' => 'your-region',
-            'bucket' => 'your-bucket',
+            'key'    => 'AKIAJZUKCJVA4GDQI5QA',
+            'secret' => 'uxmv+62hb6OoeSgQ3qnWBM4Sr0kq9qOXg75YOfDe',
+            'region' => 'us-east-1',
+            'bucket' => 'WidgetResultadosWin',
         ],
 
         'rackspace' => [

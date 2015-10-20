@@ -31,5 +31,18 @@
                 <a href="/users" class="btn btn-primary">Ver</a>
             </div>
         </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    Partidos
+                </div>
+                <div class="card-block">
+                    <p class="card-text"><strong>Próximo partido:</strong> <br>
+                    {{$nextmatch->home->name}} vs. {{$nextmatch->away->name}}<br>
+                        <small>{{$nextmatch->date}}</small><br>
+                    <small>ID: {{$nextmatch->id}}</small>
+                </div>
+            </div>
+        </div>
     </div>
 @stop

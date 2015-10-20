@@ -60,6 +60,10 @@ class Game extends Model
             return "";
         }
     }
+    public function hour( )
+    {
+        return date("h:i a",strtotime($this->date));
+    }
     /**
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -7,6 +7,8 @@ use Dayscore\Tournament;
 use Illuminate\Http\Request;
 use Dayscore\Http\Requests;
 use Dayscore\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\View;
 use Kamaln7\Toastr\Facades\Toastr;
 
 class TournamentsController extends Controller
@@ -107,4 +109,16 @@ class TournamentsController extends Controller
             return redirect('tournaments');
         }
     }
+
+    public function updatewidget(Tournament $tournament)
+    {
+        $dates = ["2015-10-20","2015-10-21"];
+        $view = View::make('tournaments.widget',compact('tournament','dates'));
+        $content = $view->render();
+        Storage::disk('s3')->put('/resultswidget/150946_0.txt',$content);
+        Storage::disk('s3')->setVisibility('/resultswidget/150946_0.txt', 'public');
+        return $content;
+
+    }
+
 }

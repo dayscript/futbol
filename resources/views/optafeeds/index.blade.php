@@ -49,6 +49,7 @@
                         @if($feed->tournament())
                             <a class="btn btn-info btn-sm" href="/optafeeds/{{$feed->id}}/process"><i
                                         class="fa fa-floppy-o"></i> Procesar</a>
+                            <a href="/tournaments/updatewidget/{{$feed->tournament()->id}}" class="btn btn-info btn-sm">Widget</a>
                         @endif
                     </td>
                 </tr>

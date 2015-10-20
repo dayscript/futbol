@@ -2,11 +2,13 @@
 
 namespace Dayscore\Http\Controllers;
 
+use Dayscore\Opta\Game;
 use Dayscore\Optafeed;
 use Dayscore\User;
 use Illuminate\Http\Request;
 use Dayscore\Http\Requests;
 use Dayscore\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class PagesController extends Controller
 {
@@ -19,7 +21,8 @@ class PagesController extends Controller
     {
         $users = User::all();
         $optafeeds = Optafeed::latest();
-        return view('pages.dashboard',compact('optafeeds','users'));
+        $nextmatch = Game::where('date','>',date("Y-m-d H:i",time()+60*60*6))->orderBy('date','asc')->first();
+        return view('pages.dashboard',compact('optafeeds','users','nextmatch'));
     }
 
     public function help()

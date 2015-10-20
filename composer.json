@@ -13,7 +13,8 @@
         "components/jquery": "^2.1",
         "laravelcollective/html": "^5.1",
         "oriceon/toastr-5-laravel": "dev-master",
-        "Nathanmac/Parser": "3.*"
+        "Nathanmac/Parser": "3.*",
+        "league/flysystem-aws-s3-v3": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
