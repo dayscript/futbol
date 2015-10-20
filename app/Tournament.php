@@ -83,6 +83,8 @@ class Tournament extends Model
         $content = $view->render();
         Storage::disk('s3')->put('/resultswidget/150946_0.txt',$content);
         Storage::disk('s3')->setVisibility('/resultswidget/150946_0.txt', 'public');
+        Storage::disk('s3')->put('/resultswidget/150946_7640.txt',$content);
+        Storage::disk('s3')->setVisibility('/resultswidget/150946_7640.txt', 'public');
 //        return $content;
     }
 
