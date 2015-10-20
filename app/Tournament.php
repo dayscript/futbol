@@ -78,14 +78,24 @@ class Tournament extends Model
     public function updatewidget()
     {
         $tournament = $this;
-        $dates = ["2015-10-20","2015-10-21"];
-        $view = View::make('tournaments.widget',compact('tournament','dates'));
-        $content = $view->render();
-        Storage::disk('s3')->put('/resultswidget/150946_0.txt',$content);
-        Storage::disk('s3')->setVisibility('/resultswidget/150946_0.txt', 'public');
-        Storage::disk('s3')->put('/resultswidget/150946_7640.txt',$content);
-        Storage::disk('s3')->setVisibility('/resultswidget/150946_7640.txt', 'public');
-//        return $content;
+        if($this->id=="150946"){
+            $dates = ["2015-10-20","2015-10-21"];
+            $view = View::make('tournaments.widget',compact('tournament','dates'));
+            $content = $view->render();
+            Storage::disk('s3')->put('/resultswidget/150946_0.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150946_0.txt', 'public');
+            Storage::disk('s3')->put('/resultswidget/150946_7640.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150946_7640.txt', 'public');
+        } else if($this->id == "150945"){
+            $dates = ["2015-10-20","2015-10-21","2015-10-22"];
+            $view = View::make('tournaments.widget',compact('tournament','dates'));
+            $content = $view->render();
+            Storage::disk('s3')->put('/resultswidget/150945_0.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150945_0.txt', 'public');
+            Storage::disk('s3')->put('/resultswidget/150945_7666.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150945_7666.txt', 'public');
+
+        }
     }
 
 }
