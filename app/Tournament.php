@@ -94,6 +94,14 @@ class Tournament extends Model
             Storage::disk('s3')->setVisibility('/resultswidget/150945_0.txt', 'public');
             Storage::disk('s3')->put('/resultswidget/150945_7666.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150945_7666.txt', 'public');
+        } else if($this->id == "150942"){
+            $dates = ["2015-10-24","2015-10-25"];
+            $view = View::make('tournaments.widget',compact('tournament','dates'));
+            $content = $view->render();
+            Storage::disk('s3')->put('/resultswidget/150942_0.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150942_0.txt', 'public');
+            Storage::disk('s3')->put('/resultswidget/150945_7519.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150945_7519.txt', 'public');
 
         }
     }
