@@ -78,7 +78,7 @@ class Tournament extends Model
     public function updatewidget()
     {
         $tournament = $this;
-        if($this->id=="150946"){
+        if($this->id=="150946"){ // Champions
             $dates = ["2015-10-20","2015-10-21"];
             $view = View::make('tournaments.widget',compact('tournament','dates'));
             $content = $view->render();
@@ -86,7 +86,7 @@ class Tournament extends Model
             Storage::disk('s3')->setVisibility('/resultswidget/150946_0.txt', 'public');
             Storage::disk('s3')->put('/resultswidget/150946_7640.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150946_7640.txt', 'public');
-        } else if($this->id == "150945"){
+        } else if($this->id == "150945"){ //Sudamericana
             $dates = ["2015-10-20","2015-10-21","2015-10-22"];
             $view = View::make('tournaments.widget',compact('tournament','dates'));
             $content = $view->render();
@@ -94,7 +94,7 @@ class Tournament extends Model
             Storage::disk('s3')->setVisibility('/resultswidget/150945_0.txt', 'public');
             Storage::disk('s3')->put('/resultswidget/150945_7666.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150945_7666.txt', 'public');
-        } else if($this->id == "150942"){
+        } else if($this->id == "150942"){ // Premier
             $dates = ["2015-10-24","2015-10-25"];
             $view = View::make('tournaments.widget',compact('tournament','dates'));
             $content = $view->render();
@@ -102,14 +102,22 @@ class Tournament extends Model
             Storage::disk('s3')->setVisibility('/resultswidget/150942_0.txt', 'public');
             Storage::disk('s3')->put('/resultswidget/150942_7519.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150942_7519.txt', 'public');
-        } else if($this->id == "150944"){
+        } else if($this->id == "150944"){ //Serie A
             $dates = ["2015-10-24","2015-10-25"];
             $view = View::make('tournaments.widget',compact('tournament','dates'));
             $content = $view->render();
             Storage::disk('s3')->put('/resultswidget/150944_0.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150944_0.txt', 'public');
-            Storage::disk('s3')->put('/resultswidget/150942_7600.txt',$content);
-            Storage::disk('s3')->setVisibility('/resultswidget/150942_7600.txt', 'public');
+            Storage::disk('s3')->put('/resultswidget/150944_7600.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150944_7600.txt', 'public');
+        } else if($this->id == "150943"){ //Liga BBVA
+            $dates = ["2015-10-23","2015-10-24","2015-10-25","2015-10-26"];
+            $view = View::make('tournaments.widget',compact('tournament','dates'));
+            $content = $view->render();
+            Storage::disk('s3')->put('/resultswidget/150943_0.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150943_0.txt', 'public');
+            Storage::disk('s3')->put('/resultswidget/150943_7560.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150943_7560.txt', 'public');
 
         }
     }

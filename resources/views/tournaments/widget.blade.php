@@ -52,6 +52,49 @@
             <option value="7549">Todos contra todos/Fecha 38</option>
         </select>
     </div>
+@elseif($tournament->id == "150943")
+    <div class="round_selector">
+        <select name="round" onchange="javascript:updateWidget(150943,this.options[this.selectedIndex].value);">
+            <option value="7552">Todos contra todos/Fecha 1</option>
+            <option value="7553">Todos contra todos/Fecha 2</option>
+            <option value="7554">Todos contra todos/Fecha 3</option>
+            <option value="7555">Todos contra todos/Fecha 4</option>
+            <option value="7556">Todos contra todos/Fecha 5</option>
+            <option value="7557">Todos contra todos/Fecha 6</option>
+            <option value="7558">Todos contra todos/Fecha 7</option>
+            <option value="7559">Todos contra todos/Fecha 8</option>
+            <option selected="" value="7560">Todos contra todos/Fecha 9</option>
+            <option value="7561">Todos contra todos/Fecha 10</option>
+            <option value="7562">Todos contra todos/Fecha 11</option>
+            <option value="7563">Todos contra todos/Fecha 12</option>
+            <option value="7564">Todos contra todos/Fecha 13</option>
+            <option value="7565">Todos contra todos/Fecha 14</option>
+            <option value="7566">Todos contra todos/Fecha 15</option>
+            <option value="7567">Todos contra todos/Fecha 16</option>
+            <option value="7568">Todos contra todos/Fecha 17</option>
+            <option value="7569">Todos contra todos/Fecha 18</option>
+            <option value="7570">Todos contra todos/Fecha 19</option>
+            <option value="7571">Todos contra todos/Fecha 20</option>
+            <option value="7572">Todos contra todos/Fecha 21</option>
+            <option value="7573">Todos contra todos/Fecha 22</option>
+            <option value="7574">Todos contra todos/Fecha 23</option>
+            <option value="7575">Todos contra todos/Fecha 24</option>
+            <option value="7576">Todos contra todos/Fecha 25</option>
+            <option value="7577">Todos contra todos/Fecha 26</option>
+            <option value="7578">Todos contra todos/Fecha 27</option>
+            <option value="7579">Todos contra todos/Fecha 28</option>
+            <option value="7580">Todos contra todos/Fecha 29</option>
+            <option value="7581">Todos contra todos/Fecha 30</option>
+            <option value="7582">Todos contra todos/Fecha 31</option>
+            <option value="7583">Todos contra todos/Fecha 32</option>
+            <option value="7584">Todos contra todos/Fecha 33</option>
+            <option value="7585">Todos contra todos/Fecha 34</option>
+            <option value="7586">Todos contra todos/Fecha 35</option>
+            <option value="7587">Todos contra todos/Fecha 36</option>
+            <option value="7588">Todos contra todos/Fecha 37</option>
+            <option value="7589">Todos contra todos/Fecha 38</option>
+        </select>
+    </div>
 @elseif($tournament->id == "150944")
     <div class="round_selector">
         <select name="round" onchange="javascript:updateWidget(150944,this.options[this.selectedIndex].value);">
@@ -183,6 +226,13 @@
         <div class="buttons">
             <a href="/estadisticas/calendario/serie-a-tim-2015-2016">ESTAD&Iacute;STICAS</a>
             <a href="/estadisticas/posiciones/serie-a-tim-2015-2016">POSICIONES</a>
+        </div>
+    </div>
+@elseif($tournament->id == "150943")
+    <div class="dsf_resultados">
+        <div class="buttons">
+            <a href="/estadisticas/calendario/liga-bbva-2015-2016">ESTAD&Iacute;STICAS</a>
+            <a href="/estadisticas/posiciones/liga-bbva-2015-2016">POSICIONES</a>
         </div>
     </div>
 @elseif($tournament->id == "150945")
