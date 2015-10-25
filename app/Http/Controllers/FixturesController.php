@@ -46,8 +46,12 @@ class FixturesController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $request->user()->fixtures()->create($data);
-        Toastr::success("Fixture creado correctamente!");
+        if (!isset($data['classicsRound'])) $data['classicsRound'] = 0;
+        $fixture = $request->user()->fixtures()->create($data);
+        for ($i = 1; $i <= $fixture->size; $i++) {
+            $fixture->teams()->create(["name" => "Equipo " . $i, "order" => $i]);
+        }
+        Toastr::success("Fixture y equipos creados correctamente!");
         return redirect('fixtures');
     }
 
@@ -92,10 +96,7 @@ class FixturesController extends Controller
         $fixture->update($data);
         $teams = $fixture->teams;
         for ($i = $teams->count() + 1; $i <= $fixture->size; $i++) {
-//            $team = Team::create(["name" => "Equipo " . $i, "order" => $i]);
-//            dd($team);
             $fixture->teams()->create(["name" => "Equipo " . $i, "order" => $i]);
-//            dd($fixture->teams);
         }
         while($fixture->size < $teams->count()) {
             Toastr::info("Eliminar Equipo");
