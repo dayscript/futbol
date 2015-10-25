@@ -1,12 +1,19 @@
 <?php
 
-namespace Dayscore;
+namespace Dayscore\Fixtures;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class FixtureTestTeam extends Model
+class Team extends Model
 {
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'fixture_teams';
+
     /**
      * The attributes that are mass assignable.
      *

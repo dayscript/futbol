@@ -6,7 +6,7 @@
 
 @section('content')
     <h2><i class="fa fa-calendar"></i> Fixtures de prueba </h2>
-    <a href="/fixturetests/create" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Crear</a>
+    <a href="/fixtures/create" class="btn btn-primary btn-sm pull-right"><i class="fa fa-plus"></i> Crear</a>
     <small>Lista de fixtures de prueba creado por este usuario. <br>&nbsp;</small>
 
     <table class="table table-striped table-hover">
@@ -28,10 +28,10 @@
                 <td>{{ $fixture->created_at }}</td>
                 <td>
 
-                    {!! Form::open(array('route' => array('fixturetests.destroy', $fixture->id),'class'=>'delete-fixture', 'method' => 'delete'))!!}
-                    <a class="btn btn-info btn-sm" href="/fixturetests/{{$fixture->id}}/teams"><i class="fa fa-futbol-o"></i> Equipos</a>
+                    {!! Form::open(array('route' => array('fixtures.destroy', $fixture->id),'class'=>'delete-fixture', 'method' => 'delete'))!!}
+                    <a class="btn btn-info btn-sm" href="/fixtures/{{$fixture->id}}/teams"><i class="fa fa-futbol-o"></i> Equipos</a>
                     <input type="submit" class="btn btn-danger btn-sm deleteFixture" value="Eliminar">
-                    <a class="btn btn-primary btn-sm" href="/fixturetests/{{$fixture->id}}/edit"><i
+                    <a class="btn btn-primary btn-sm" href="/fixtures/{{$fixture->id}}/edit"><i
                                 class="fa fa-pencil-square-o"></i> Editar</a>
                 {!! Form::close() !!}
             </tr>

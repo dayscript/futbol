@@ -1,12 +1,18 @@
 <?php
 
-namespace Dayscore;
+namespace Dayscore\Fixtures;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class FixtureTest extends Model
+class Fixture extends Model
 {
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'fixtures';
     /**
      * The attributes that are mass assignable.
      *
@@ -46,13 +52,13 @@ class FixtureTest extends Model
     }
 
     /**
-     * Return all FixtureTestTeam objects associated with this Fixture
+     * Return all Team objects associated with this Fixture
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function teams()
     {
-        return $this->hasMany( 'Dayscore\FixtureTestTeam' )->orderBy('order','asc');
+        return $this->hasMany( 'Dayscore\Fixtures\Team' )->orderBy('order','asc');
     }
 
 }

@@ -2,8 +2,8 @@
 
 namespace Dayscore;
 
-use Dayscore\FixtureTest;
 use Carbon\Carbon;
+use Dayscore\Fixtures\Fixture;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -71,13 +71,13 @@ class User extends Model implements AuthenticatableContract,
     }
 
     /**
-     * Return all FixtureTests objects associated with this user
+     * Return all Fixtures objects associated with this user
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function fixtureTests()
+    public function fixtures()
     {
-        return $this->hasMany( 'Dayscore\FixtureTest' );
+        return $this->hasMany( 'Dayscore\Fixtures\Fixture' );
     }
 
 }

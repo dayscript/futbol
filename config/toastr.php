@@ -4,10 +4,11 @@ return [
     'options' => [
         'progressBar' => true,
         'closeButton' => true,
-        "showMethod" => "fadeIn",
-        "hideMethod" => "fadeOut",
+        "showMethod" => "show",
+        "hideMethod" => "hide",
+        "newestOnTop" => true,
         "showDuration" => "200",
         "positionClass" => "toast-bottom-right",
-        "showEasing"=>"swing",
-        "timeOut" => "3000"]
+        "showEasing"=>"linear",
+        "timeOut" => "2500"]
 ];

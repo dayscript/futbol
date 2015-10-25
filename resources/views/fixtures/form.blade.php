@@ -17,10 +17,10 @@
         <div class="form-group">
             {!! Form::label('classicsRound', 'Opciones') !!}
             <div class="checkbox form-control">
-                <label><input type="checkbox" name="classicsRound" value="1"> Incluir fecha adicional de clásicos</label>
+                <label>{!! Form::checkbox('classicsRound', '1', null) !!} Incluir fecha adicional de clásicos</label>
+
             </div>
             <small class="text-muted">Esto creará una fecha adicional en el calendario</small>
-
         </div>
     </div>
 </div>

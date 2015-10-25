@@ -13,12 +13,11 @@
     <!-- Bootstrap CSS -->
     <link rel="shortcut icon" type="image/x-icon" media="all" href="{{ asset('favicon.ico') }}"/>
     <link rel= "icon" media="all" type="image/vnd.microsoft.icon" href="{{ asset('favicon.ico') }}" />
-
     <link rel="stylesheet" href="{{ asset('css/vendor.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @yield('styles')
     <link href='https://fonts.googleapis.com/css?family=Lato:400,100,300,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 </head>
 <body>

@@ -24,9 +24,9 @@
                             @endif
                         </a>
                     </li>
-                    <li class="nav-item {{(Request::path() == 'fixturetests')?"active":""}}">
-                        <a class="nav-link" href="/fixturetests">Fixtures
-                            @if(Request::path() == 'fixturetests')
+                    <li class="nav-item {{(Request::path() == 'fixtures')?"active":""}}">
+                        <a class="nav-link" href="/fixtures">Fixtures
+                            @if(Request::path() == 'fixtures')
                                 <span class="sr-only">(current)</span>
                             @endif
                         </a>
