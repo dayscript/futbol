@@ -4,17 +4,20 @@
     Fixture: {{$fixture->title}} @parent
 @stop
 
+
+@section('breadcrumb')
+    <ol class="breadcrumb" style="margin-bottom: 15px;">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/fixtures">Fixtures</a></li>
+        <li class="active">{{$fixture->title}}</li>
+    </ol>
+@stop
 @section('content')
-    <h3>Detalles de fixture de prueba</h3>
+    <h3>Fixture: {{$fixture->title}}</h3>
     <hr>
     @if($option == "teams")
-        @foreach($fixture->teams as $team)
-            <div class="row">
-                <div class="col-md-12">{{$team->name}}</div>
-            </div>
-        @endforeach
+        @include('fixtures.teams')
     @else
-        Fixture:{{$fixture}}<br>
-        Opcion: {{ $option }}<br>
+        @include('fixtures.details')
     @endif
 @stop

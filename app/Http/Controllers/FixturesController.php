@@ -47,10 +47,14 @@ class FixturesController extends Controller
     {
         $data = $request->all();
         if (!isset($data['classicsRound'])) $data['classicsRound'] = 0;
-        $fixture = $request->user()->fixtures()->create($data);
-        for ($i = 1; $i <= $fixture->size; $i++) {
-            $fixture->teams()->create(["name" => "Equipo " . $i, "order" => $i]);
+        if ($data['size']%2!=0){
+            $data['size']--;
+            Toastr::warning("Solo se aceptan cantidad de equipos pares en este momento.");
         }
+        $fixture = $request->user()->fixtures()->create($data);
+        $fixture->updateTeams();
+        $fixture->createRounds();
+        $fixture->createMatches();
         Toastr::success("Fixture y equipos creados correctamente!");
         return redirect('fixtures');
     }
@@ -65,6 +69,7 @@ class FixturesController extends Controller
      */
     public function show(Fixture $fixture, $option = "")
     {
+//        $fixture->updateMatches();
         return view('fixtures.show', compact('fixture', 'option'));
     }
 
@@ -92,17 +97,16 @@ class FixturesController extends Controller
     {
         $data = $request->all();
         if (!isset($data['classicsRound'])) $data['classicsRound'] = 0;
-        if ($fixture->size != $data['size']) Toastr::info("Ha cambiado el número de equipos.");
+        if($data['classicsRound'] != $fixture->classicsRound){
+            $fixture->setClassicsRound($data['classicsRound']);
+        }
+        if ($data['size']%2!=0){
+            $data['size']--;
+            Toastr::warning("Solo se aceptan cantidad de equipos pares en este momento.");
+        }
+
         $fixture->update($data);
-        $teams = $fixture->teams;
-        for ($i = $teams->count() + 1; $i <= $fixture->size; $i++) {
-            $fixture->teams()->create(["name" => "Equipo " . $i, "order" => $i]);
-        }
-        while($fixture->size < $teams->count()) {
-            Toastr::info("Eliminar Equipo");
-            $team = $teams->pop();
-            $team->delete();
-        }
+        $fixture->updateTeams();
         Toastr::success("Fixture actualizado correctamente!");
         return redirect('fixtures');
     }

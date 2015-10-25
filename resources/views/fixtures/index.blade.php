@@ -22,7 +22,7 @@
         <tbody>
         @foreach($fixtures as $fixture)
             <tr class="fixture-{{$fixture->id}}">
-                <td>{{ $fixture->title }}</td>
+                <td><a href="/fixtures/{{$fixture->id}}">{{ $fixture->title }}</a></td>
                 <td>{{ $fixture->size }}</td>
                 <td>{{ ($fixture->classicsRound)?"Si":"No" }}</td>
                 <td>{{ $fixture->created_at }}</td>
