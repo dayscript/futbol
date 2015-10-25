@@ -47,7 +47,7 @@ class FixturesController extends Controller
     {
         $data = $request->all();
         if (!isset($data['classicsRound'])) $data['classicsRound'] = 0;
-        if ($data['size']%2!=0){
+        if ($data['size'] % 2 != 0) {
             $data['size']--;
             Toastr::warning("Solo se aceptan cantidad de equipos pares en este momento.");
         }
@@ -55,6 +55,7 @@ class FixturesController extends Controller
         $fixture->updateTeams();
         $fixture->createRounds();
         $fixture->createMatches();
+        $fixture->updateMatches();
         Toastr::success("Fixture y equipos creados correctamente!");
         return redirect('fixtures');
     }
@@ -69,7 +70,6 @@ class FixturesController extends Controller
      */
     public function show(Fixture $fixture, $option = "")
     {
-//        $fixture->updateMatches();
         return view('fixtures.show', compact('fixture', 'option'));
     }
 
@@ -97,10 +97,10 @@ class FixturesController extends Controller
     {
         $data = $request->all();
         if (!isset($data['classicsRound'])) $data['classicsRound'] = 0;
-        if($data['classicsRound'] != $fixture->classicsRound){
+        if ($data['classicsRound'] != $fixture->classicsRound) {
             $fixture->setClassicsRound($data['classicsRound']);
         }
-        if ($data['size']%2!=0){
+        if ($data['size'] % 2 != 0) {
             $data['size']--;
             Toastr::warning("Solo se aceptan cantidad de equipos pares en este momento.");
         }
