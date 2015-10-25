@@ -28,7 +28,8 @@
         ],
         "psr-4": {
             "Dayscore\\": "app/"
-        }
+        },
+        "files": ["app/Http/helpers.php"]
     },
     "autoload-dev": {
         "classmap": [
