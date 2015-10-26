@@ -71,7 +71,14 @@ class FixturesController extends Controller
     public function show(Fixture $fixture, $option = "")
     {
         $classicsRound = $fixture->rounds()->where('name','like','%Clasicos%')->first();
-        $teams = \Dayscore\Team::all();
+        $asigned_teams = [];
+        foreach($fixture->teams as $fixtureteam){
+            if($fixtureteam->team){
+                $asigned_teams[] = $fixtureteam->team->id;
+            }
+        }
+
+        $teams = \Dayscore\Team::whereNotIn('id',$asigned_teams)->orderBy('name','asc')->get();
         return view('fixtures.show', compact('fixture', 'option','classicsRound','teams'));
     }
 
