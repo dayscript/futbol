@@ -2,7 +2,7 @@
     <div class="col-md-4">
         <div class="form-group">
             {!! Form::label('id', 'ID') !!}
-            {!! Form::input('number','id',null,['id' => 'id','placeholder'=>'20','class' =>'form-control maxlength']) !!}
+            {!! Form::input('number','id',null,['id' => 'id','placeholder'=>'XXXX','class' =>'form-control maxlength']) !!}
             <small class="text-muted">ID del equipo. Se debe usar el ID existente del equipo en las plataformas de Dayscript.</small>
         </div>
     </div>
