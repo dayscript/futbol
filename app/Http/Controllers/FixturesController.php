@@ -125,6 +125,9 @@ class FixturesController extends Controller
         $data = $request->all();
         if(!$data['team_id']){
             $data['team_id'] = null;
+            Toastr::warning("Equipo desasignado de este fixture!");
+            $team->update($data);
+            return redirect('fixtures/'.$team->fixture_id.'/teams');
         }
         $team->update($data);
         Toastr::success("Equipo asignado a este fixture!");
