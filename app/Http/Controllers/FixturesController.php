@@ -78,6 +78,10 @@ class FixturesController extends Controller
             }
         }
 
+        if($fixture->rounds()->count()==0){
+            $fixture->createMatches();
+            $fixture->updateMatches();
+        }
         $teams = \Dayscore\Team::whereNotIn('id',$asigned_teams)->orderBy('name','asc')->get();
         return view('fixtures.show', compact('fixture', 'option','classicsRound','teams'));
     }
