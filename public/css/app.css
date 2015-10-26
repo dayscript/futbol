@@ -4,4 +4,27 @@ body {
 .navbar-dayscore {
   border-bottom: 1px solid #548B0D; }
 
+.round .match {
+  margin-bottom: 0; }
+  .round .match .team {
+    margin: 5px 0;
+    display: inline-block;
+    cursor: pointer;
+    height: 26px;
+    border: 1px solid transparent;
+    border-radius: 13px;
+    padding: 0 10px; }
+    .round .match .team:hover {
+      background: #000011;
+      height: 26px;
+      border: 1px solid #ccc;
+      border-radius: 13px;
+      color: white; }
+    .round .match .team.round {
+      width: 26px;
+      padding: 0; }
+
+.resume a#deselect {
+  color: white; }
+
 /*# sourceMappingURL=app.css.map */

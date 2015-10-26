@@ -53,8 +53,10 @@ class TournamentsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Tournament $tournament
+     * @param string $option
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
     public function show(Tournament $tournament, $option="")
     {
@@ -84,16 +86,6 @@ class TournamentsController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     public function sync($optaid, $optaseason)
     {
@@ -109,28 +101,4 @@ class TournamentsController extends Controller
             return redirect('tournaments');
         }
     }
-
-    public function updatewidget(Tournament $tournament)
-    {
-        if($tournament->id=="150946"){
-            $dates = ["2015-10-20","2015-10-21"];
-            $view = View::make('tournaments.widget',compact('tournament','dates'));
-            $content = $view->render();
-            Storage::disk('s3')->put('/resultswidget/150946_0.txt',$content);
-            Storage::disk('s3')->setVisibility('/resultswidget/150946_0.txt', 'public');
-            Storage::disk('s3')->put('/resultswidget/150946_7640.txt',$content);
-            Storage::disk('s3')->setVisibility('/resultswidget/150946_7640.txt', 'public');
-        } else if($tournament->id == "150945"){
-            $dates = ["2015-10-20","2015-10-21","2015-10-22"];
-            $view = View::make('tournaments.widget',compact('tournament','dates'));
-            $content = $view->render();
-            Storage::disk('s3')->put('/resultswidget/150945_0.txt',$content);
-            Storage::disk('s3')->setVisibility('/resultswidget/150945_0.txt', 'public');
-            Storage::disk('s3')->put('/resultswidget/150945_7666.txt',$content);
-            Storage::disk('s3')->setVisibility('/resultswidget/150945_7666.txt', 'public');
-        }
-        return $content;
-
-    }
-
 }

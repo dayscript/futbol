@@ -30,6 +30,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('optafeeds', 'Dayscore\Optafeed');
         $router->model('optagames', 'Dayscore\Opta\Game');
         $router->model('tournaments', 'Dayscore\Tournament');
+        $router->model('teams', 'Dayscore\Team');
     }
 
     /**

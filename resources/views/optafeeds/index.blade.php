@@ -8,7 +8,8 @@
             <thead>
             <tr>
                 <th>Tipo <br>
-                    <select name="type" id="type" onchange="document.location.href='/optafeeds/?tournament={{$tournament}}&type='+this.options[this.selectedIndex].value;">
+                    <select name="type" id="type"
+                            onchange="document.location.href='/optafeeds/?tournament={{$tournament}}&type='+this.options[this.selectedIndex].value;">
                         <option {{$type==""?"selected":""}} value="">Todos</option>
                         <option {{$type=="F1"?"selected":""}} value="F1">Fixtures & results</option>
                         <option {{$type=="F26"?"selected":""}} value="F26">Live Scores</option>
@@ -17,7 +18,8 @@
                     </select>
                 </th>
                 <th>Torneo <br>
-                    <select name="tournament" id="tournament" onchange="document.location.href='/optafeeds/?type={{$type}}&tournament='+this.options[this.selectedIndex].value;">
+                    <select name="tournament" id="tournament"
+                            onchange="document.location.href='/optafeeds/?type={{$type}}&tournament='+this.options[this.selectedIndex].value;">
                         <option {{$tournament==""?"selected":""}} value="">Todos</option>
                         @foreach($tournaments as $tour)
                             <option {{$tournament==$tour->id?"selected":""}} value="{{$tour->id}}">{{$tour->name}}</option>
@@ -34,7 +36,8 @@
                     <td>{{$feed->type()}}</td>
                     <td>{{($feed->tournament())?$feed->tournament()->name:$feed->competitionId." / ".$feed->seasonId }}
                         <br>
-                        <small><strong>ID:</strong> {{$feed->tournament()->id}} <strong>OPTA:</strong> {{$feed->competitionId}} / {{$feed->seasonId}}</small>
+                        <small><strong>ID:</strong> {{$feed->tournament()->id}}
+                            <strong>OPTA:</strong> {{$feed->competitionId}} / {{$feed->seasonId}}</small>
                     </td>
                     <td>
                         {{$feed->created_at}}<br>
@@ -55,11 +58,13 @@
                 </tr>
             @endforeach
             <tr class="table-active">
-                <td colspan="5" class="text-right">{!! $optafeeds->render() !!}</td>
+                <td colspan="5" class="text-right"></td>
             </tr>
             </tbody>
-
         </table>
+        <div class="text-right">
+            {!! $optafeeds->render() !!}
+        </div>
     </div>
 @stop
 

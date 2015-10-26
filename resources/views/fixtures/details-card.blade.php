@@ -1,13 +1,13 @@
 <ul class="nav nav-tabs">
-    <li class="nav-item"><a href="#" class="nav-link active">Vista en tabla</a></li>
-    <li class="nav-item"><a href="/fixtures/{{$fixture->id}}/details-block" class="nav-link">Vista en bloque</a></li>
+    <li class="nav-item"><a href="/fixtures/{{$fixture->id}}" class="nav-link">Vista en tabla</a></li>
+    <li class="nav-item"><a href="#" class="nav-link active">Vista en bloque</a></li>
     <li class="nav-item"><a href="/fixtures/{{$fixture->id}}/teams" class="nav-link">Equipos</a></li>
 </ul>
-<hr>
 <blockquote>
     <p><b>Notas:</b>
     <ul>
-        <li>Puede hacer click sobre un número o escudo de equipo para resaltar los partidos de ese equipo en todas las fechas.
+        <li>Puede hacer click sobre un nombre o escudo de equipo para resaltar los partidos de ese equipo en todas las
+            fechas.
             <span class="label label-primary">Local</span> <span class="label label-warning">Visitante</span>
         </li>
         <li>Para las llaves correspondientes a la fecha de clásicos, el encuentro se repite cambiando la localía.
@@ -29,40 +29,60 @@
         Partidos de visitante: <span class="label label-warning away_games">0</span> - <span class="away_rounds"></span>
     </div>
 </div>
-<table class="table table-sm">
-    @foreach($fixture->rounds as $round)
-        <tr class="round">
-            <td>{{$round->name}}</td>
-            @foreach($round->matches as $match)
-                <td>
-                    <div data-home="{{$match->home?$match->home->id:''}}"
-                         data-away="{{$match->away?$match->away->id:''}}"
-                         data-round="{{$round->name}}"
-                         class="card match text-center
-                         {{$match->home?'home_'.$match->home->id:''}}
-                         {{$match->away?'away_'.$match->away->id:''}}"
-                            id="match_{{$match->id}}">
-                        <div class="card-text">
-                            <div class="team round"
-                                 data-name="{{$match->home?($match->home->team?$match->home->team->name:$match->home->name):''}}"
-                                 data-id="{{$match->home?$match->home->id:''}}"
-                                    id="match_{{$match->id}}_home">
-                                <small>@include('fixtures.teams.icon',['team'=>$match->home])</small>
-                            </div>
-                            <a href="#" class="card-text switch_teams" data-match="{{$match->id}}">vs</a>
-                            <div class="team round"
-                                 data-name="{{$match->away?($match->away->team?$match->away->team->name:$match->away->name):''}}"
-                                 data-id="{{$match->away?$match->away->id:''}}"
-                                 id="match_{{$match->id}}_away">
-                                <small>@include('fixtures.teams.icon',['team'=>$match->away])</small>
+
+@foreach($fixture->rounds->chunk(3) as $set)
+    <div class="row">
+        @foreach($set as $round)
+            <div class="col-sm-4 round">
+                <div class="card text-center">
+                    <div class="card-header"><h5>{{$round->name}}</h5>
+                        <small>Febrero 1 / 2016</small>
+                    </div>
+                    {{--<ul class="list-group list-group-flush">--}}
+                    @foreach($round->matches as $match)
+                        {{--<li class="list-group-item ">--}}
+                        <div class="match card
+                        {{$match->home?'home_'.$match->home->id:''}}
+                        {{$match->away?'away_'.$match->away->id:''}}"
+                             data-home="{{$match->home?$match->home->id:''}}"
+                             data-away="{{$match->away?$match->away->id:''}}"
+                             data-round="{{$round->name}}"
+                             id="match_{{$match->id}}">
+                            <div class="card-text">
+                                <div class="row">
+                                    <div class="col-md-5 text-right p-x-0">
+                                        <div class="team"
+                                             data-name="{{$match->home?($match->home->team?$match->home->team->name:$match->home->name):''}}"
+                                             data-id="{{$match->home?$match->home->id:''}}"
+                                             id="match_{{$match->id}}_home">
+                                            <small>@include('fixtures.teams.simple',['team'=>$match->home,'right'=>true])</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 p-x-0">
+                                        <a href="#" class="card-text switch_teams" data-match="{{$match->id}}">vs</a>
+                                    </div>
+                                    <div class="col-md-5 text-left p-x-0">
+                                        <div class="team "
+                                             data-name="{{$match->away?($match->away->team?$match->away->team->name:$match->away->name):''}}"
+                                             data-id="{{$match->away?$match->away->id:''}}"
+                                             id="match_{{$match->id}}_away">
+                                            <small>@include('fixtures.teams.simple',['team'=>$match->away])</small>
+                                        </div>
+
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </td>
-            @endforeach
-        </tr>
-    @endforeach
-</table>
+                        {{--</li>--}}
+                    @endforeach
+                    {{--</ul>--}}
+                </div>
+            </div>
+        @endforeach
+    </div>
+@endforeach
+
 @section('scripts')
     <script>
         $('#deselect').on('click',function(e){

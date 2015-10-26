@@ -44,4 +44,12 @@ class Team extends Model
         Carbon::setLocale('es');
         return Carbon::parse($date)->diffForHumans();
     }
+
+    public function image()
+    {
+        if(!file_exists(public_path()."/images/teams/".$this->id.".png")){
+            return "/images/teams/team.png";
+        }
+        return "/images/teams/".$this->id.".png";
+    }
 }

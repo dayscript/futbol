@@ -70,7 +70,9 @@ class FixturesController extends Controller
      */
     public function show(Fixture $fixture, $option = "")
     {
-        return view('fixtures.show', compact('fixture', 'option'));
+        $classicsRound = $fixture->rounds()->where('name','like','%Clasicos%')->first();
+        $teams = \Dayscore\Team::all();
+        return view('fixtures.show', compact('fixture', 'option','classicsRound','teams'));
     }
 
     /**
@@ -91,7 +93,6 @@ class FixturesController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @param Fixture $fixture
      * @return \Illuminate\Http\Response
-     * @internal param int $id
      */
     public function update(Request $request, Fixture $fixture)
     {
@@ -109,6 +110,18 @@ class FixturesController extends Controller
         $fixture->updateTeams();
         Toastr::success("Fixture actualizado correctamente!");
         return redirect('fixtures');
+    }
+
+    public function updateTeam(Request $request, $id)
+    {
+        $team = Team::findOrNew($id);
+        $data = $request->all();
+        if(!$data['team_id']){
+            $data['team_id'] = null;
+        }
+        $team->update($data);
+        Toastr::success("Equipo asignado a este fixture!");
+        return redirect('fixtures/'.$team->fixture_id.'/teams');
     }
 
     /**

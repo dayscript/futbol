@@ -51,4 +51,13 @@ class Team extends Model
         Carbon::setLocale('es');
         return Carbon::parse($date)->diffForHumans();
     }
+    /**
+     * Return Team object associated with this Fixture Team
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function team()
+    {
+        return $this->belongsTo('Dayscore\Team','team_id');
+    }
 }

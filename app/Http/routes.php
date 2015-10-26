@@ -29,11 +29,12 @@ Route::resource('optafeeds','OptafeedsController');
 Route::resource('optagames','OptagamesController');
 Route::get('optagames/{optagames}/{option}', 'OptagamesController@show');
 Route::resource('users','UsersController');
+Route::post('fixtureteams/{id}', 'FixturesController@updateTeam');
 Route::resource('fixtures','FixturesController');
 Route::get('fixtures/{fixtures}/{option}', 'FixturesController@show');
 Route::resource('tournaments','TournamentsController');
 Route::get('tournaments/sync/{optaid}/{optaseason}', 'TournamentsController@sync');
 Route::get('tournaments/updatewidget/{tournaments}', 'TournamentsController@updatewidget');
 Route::get('tournaments/{tournaments}/{option}', 'TournamentsController@show');
-
 Route::get('optafeeds/{optafeeds}/process', 'OptafeedsController@process');
+Route::resource('teams','TeamsController');

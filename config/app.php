@@ -136,6 +136,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Spatie\PaginateRoute\PaginateRouteServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -202,6 +203,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Toastr' => Kamaln7\Toastr\Facades\Toastr::class,
         'Parser' => Nathanmac\Utilities\Parser\Facades\Parser::class,
+        'PaginateRoute' => Spatie\PaginateRoute\PaginateRouteFacade::class,
 
     ],
 

@@ -1,9 +1,41 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 $dayscore-green: #548B0D;
 
-body{
+body {
   padding-top: 5rem;
 }
-.navbar-dayscore{
+
+.navbar-dayscore {
   border-bottom: 1px solid $dayscore-green;
+}
+
+.round {
+  .match {
+    margin-bottom: 0;
+    .team {
+      margin: 5px 0;
+      display: inline-block;
+      cursor: pointer;
+      height: 26px;
+      border: 1px solid transparent;
+      border-radius: 13px;
+      padding: 0 10px;
+      &:hover {
+        background: #000011;
+        height: 26px;
+        border: 1px solid #ccc;
+        border-radius: 13px;
+        color: white;
+      }
+      &.round{
+        width: 26px;
+        padding: 0;
+      }
+    }
+  }
+}
+.resume{
+  a#deselect{
+      color: white;
+  }
 }

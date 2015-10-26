@@ -17,6 +17,8 @@
     <hr>
     @if($option == "teams")
         @include('fixtures.teams')
+    @elseif($option == "details-block")
+            @include('fixtures.details-card')
     @else
         @include('fixtures.details')
     @endif

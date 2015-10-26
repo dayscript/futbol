@@ -45,6 +45,13 @@
                             @endif
                         </a>
                     </li>
+                    <li class="nav-item {{(Request::path() == 'teams')?"active":""}}">
+                        <a class="nav-link" href="/teams">Equipos
+                            @if(Request::path() == 'teams')
+                                <span class="sr-only">(current)</span>
+                            @endif
+                        </a>
+                    </li>
                 @endif
             </ul>
         </div>
