@@ -14,6 +14,7 @@
         <tr>
             <th>Nombre</th>
             <th>Email</th>
+            <th>Roles</th>
             <th>Creado</th>
             <th>Opciones</th>
         </tr>
@@ -23,6 +24,11 @@
             <tr class="user-{{$user->id}}">
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
+                <td>
+                    @foreach($user->roles as $role)
+                        <span class="label label-primary">{{$role->name}}</span>
+                    @endforeach
+                </td>
                 <td>{{ $user->created_at }}</td>
                 <td>@if(Auth::user()->id != $user->id)
                         {!! Form::open(array('route' => array('users.destroy', $user->id),'class'=>'delete-user', 'method' => 'delete'))!!}

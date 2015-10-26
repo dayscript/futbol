@@ -80,4 +80,19 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany( 'Dayscore\Fixtures\Fixture' );
     }
 
+    /**
+     * Return all roles associated with this user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('Dayscore\Role');
+    }
+
+    public function inRole($roleName)
+    {
+        return $this->roles()->where('name',$roleName)->get()->count()>0;
+    }
+
 }

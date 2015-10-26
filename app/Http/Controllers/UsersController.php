@@ -2,6 +2,7 @@
 
 namespace Dayscore\Http\Controllers;
 
+use Dayscore\Role;
 use Dayscore\User;
 use Illuminate\Http\Request;
 use Dayscore\Http\Requests;
@@ -50,8 +51,8 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('users.create');
+    {   $roles = Role::all();
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -64,7 +65,9 @@ class UsersController extends Controller
     {
         $data = $request->all();
         $data['password'] = bcrypt($request->get('password'));
-        User::create($data);
+        $user = User::create($data);
+        if(isset($data['roles']))
+            $user->roles()->sync($data['roles']);
         Toastr::success("Usuario creado correctamente!");
         return redirect('users');
     }
@@ -83,19 +86,20 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
     {
-        return view('users.edit',compact('user'));
+        $roles = Role::all();
+        return view('users.edit',compact('user','roles'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
@@ -104,6 +108,8 @@ class UsersController extends Controller
         if(trim($data['password'])=="")array_pull($data,'password');
         else $data['password'] = bcrypt($data['password']);
         $user->update($data);
+        if(isset($data['roles']))
+            $user->roles()->sync($data['roles']);
         Toastr::success("Usuario actualizado correctamente!");
         return redirect('users');
     }
@@ -111,8 +117,9 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param User $user
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(User $user)
     {

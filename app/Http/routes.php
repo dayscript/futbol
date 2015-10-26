@@ -29,6 +29,7 @@ Route::resource('optafeeds','OptafeedsController');
 Route::resource('optagames','OptagamesController');
 Route::get('optagames/{optagames}/{option}', 'OptagamesController@show');
 Route::resource('users','UsersController');
+Route::resource('roles','RolesController');
 Route::post('fixtureteams/{id}', 'FixturesController@updateTeam');
 Route::resource('fixtures','FixturesController');
 Route::get('fixtures/{fixtures}/{option}', 'FixturesController@show');

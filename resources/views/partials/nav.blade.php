@@ -10,20 +10,31 @@
                     <a class="navbar-brand" href="#"><img src="{{ asset('images/logos/dayscore.png') }}" alt="Dayscore"></a>
                 </li>
                 @if(Auth::check())
-                    <li class="nav-item {{(Request::path() == 'dashboard' || Request::path() == '/')?"active":""}}">
-                        <a class="nav-link" href="/dashboard">Dashboard
-                            @if(Request::path() == 'dashboard' || Request::path() == '/')
-                                <span class="sr-only">(current)</span>
-                            @endif
-                        </a>
-                    </li>
-                    <li class="nav-item {{(Request::path() == 'users')?"active":""}}">
-                        <a class="nav-link" href="/users">Usuarios
-                            @if(Request::path() == 'users')
-                                <span class="sr-only">(current)</span>
-                            @endif
-                        </a>
-                    </li>
+                    @if(Auth::user()->inRole("Administrador") || Auth::user()->inRole("Periodista Dayscript"))
+                        <li class="nav-item {{(Request::path() == 'dashboard' || Request::path() == '/')?"active":""}}">
+                            <a class="nav-link" href="/dashboard">Dashboard
+                                @if(Request::path() == 'dashboard' || Request::path() == '/')
+                                    <span class="sr-only">(current)</span>
+                                @endif
+                            </a>
+                        </li>
+                    @endif
+                    @if(Auth::user()->inRole("Administrador"))
+                        <li class="nav-item {{(Request::path() == 'users')?"active":""}}">
+                            <a class="nav-link" href="/users">Usuarios
+                                @if(Request::path() == 'users')
+                                    <span class="sr-only">(current)</span>
+                                @endif
+                            </a>
+                        </li>
+                        <li class="nav-item {{(Request::path() == 'roles')?"active":""}}">
+                            <a class="nav-link" href="/roles">Roles
+                                @if(Request::path() == 'roles')
+                                    <span class="sr-only">(current)</span>
+                                @endif
+                            </a>
+                        </li>
+                    @endif
                     <li class="nav-item {{(Request::path() == 'fixtures')?"active":""}}">
                         <a class="nav-link" href="/fixtures">Fixtures
                             @if(Request::path() == 'fixtures')
@@ -31,27 +42,31 @@
                             @endif
                         </a>
                     </li>
-                    <li class="nav-item {{(Request::path() == 'optafeeds')?"active":""}}">
-                        <a class="nav-link" href="/optafeeds">Feeds Opta
-                            @if(Request::path() == 'optafeeds')
-                                <span class="sr-only">(current)</span>
-                            @endif
-                        </a>
-                    </li>
-                    <li class="nav-item {{(Request::path() == 'tournaments')?"active":""}}">
-                        <a class="nav-link" href="/tournaments">Torneos
-                            @if(Request::path() == 'tournaments')
-                                <span class="sr-only">(current)</span>
-                            @endif
-                        </a>
-                    </li>
-                    <li class="nav-item {{(Request::path() == 'teams')?"active":""}}">
-                        <a class="nav-link" href="/teams">Equipos
-                            @if(Request::path() == 'teams')
-                                <span class="sr-only">(current)</span>
-                            @endif
-                        </a>
-                    </li>
+                    @if(Auth::user()->inRole("Administrador"))
+                        <li class="nav-item {{(Request::path() == 'optafeeds')?"active":""}}">
+                            <a class="nav-link" href="/optafeeds">Feeds Opta
+                                @if(Request::path() == 'optafeeds')
+                                    <span class="sr-only">(current)</span>
+                                @endif
+                            </a>
+                        </li>
+                    @endif
+                    @if(Auth::user()->inRole("Administrador") || Auth::user()->inRole("Periodista Dayscript"))
+                        <li class="nav-item {{(Request::path() == 'tournaments')?"active":""}}">
+                            <a class="nav-link" href="/tournaments">Torneos
+                                @if(Request::path() == 'tournaments')
+                                    <span class="sr-only">(current)</span>
+                                @endif
+                            </a>
+                        </li>
+                        <li class="nav-item {{(Request::path() == 'teams')?"active":""}}">
+                            <a class="nav-link" href="/teams">Equipos
+                                @if(Request::path() == 'teams')
+                                    <span class="sr-only">(current)</span>
+                                @endif
+                            </a>
+                        </li>
+                    @endif
                 @endif
             </ul>
         </div>
