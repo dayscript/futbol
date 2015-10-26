@@ -3,7 +3,7 @@
 @section('title')
     Crear fixture @parent
 @stop
-w
+
 @section('content')
     <h3>Crear un fixture </h3>
     <hr>
