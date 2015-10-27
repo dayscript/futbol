@@ -166,6 +166,13 @@ class Fixture extends Model
                         $match->away_id = Team::where('order', $team2)->where('fixture_id',$this->id)->first()->id;
                         $team2 = ($team2>1)?$team2-1:$max;
                     }
+                    if( ($match->away->order - $match->home->order == 11)
+                            || (($match->home->order == $this->size) && ($match->away->order==(1+$this->size/2)))
+                    ){
+                        $temp = $match->home_id;
+                        $match->home_id = $match->away_id;
+                        $match->away_id = $temp;
+                    }
                     $match->save();
                     $team1 = ($team1<$max)?$team1+1:1;
                 }
