@@ -141,8 +141,13 @@ class Fixture extends Model
                 $start1 = ($this->size/2)+1;
                 $start2 = 1;
                 foreach($round->matches as $match){
-                    $match->home_id = Team::where('order',$start1)->where('fixture_id',$this->id)->first()->id;
-                    $match->away_id = Team::where('order',$start2)->where('fixture_id',$this->id)->first()->id;
+                    if($start1 == $this->size){
+                        $match->home_id = Team::where('order',$start1)->where('fixture_id',$this->id)->first()->id;
+                        $match->away_id = Team::where('order',$start2)->where('fixture_id',$this->id)->first()->id;
+                    } else {
+                        $match->away_id = Team::where('order',$start1)->where('fixture_id',$this->id)->first()->id;
+                        $match->home_id = Team::where('order',$start2)->where('fixture_id',$this->id)->first()->id;
+                    }
                     $match->save();
                     $start1 = ($start1<$this->size)?$start1+1:1;
                     $start2 = ($start2<$this->size/2)?$start2+1:1;
