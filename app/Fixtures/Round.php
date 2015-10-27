@@ -30,6 +30,11 @@ class Round extends Model
         return $this->hasMany('Dayscore\Fixtures\Match')->orderBy('order', 'asc');
     }
 
+    /**
+     * Creates $number matches in current object
+     *
+     * @param $number
+     */
     public function createMatches($number)
     {
         for($i=1;$i<=$number;$i++){

@@ -96,6 +96,7 @@ class Fixture extends Model
             else
                 $this->rounds()->create(["name" => "Fecha " . $i, "order" => $i]);
         }
+        return $this;
     }
 
     public function updateTeams()
@@ -116,20 +117,25 @@ class Fixture extends Model
 
     }
 
+    /**
+     * Create matches for every round in this fixture.
+     */
     public function createMatches()
     {
-        foreach ($this->rounds as $round) {
+        foreach ($this->rounds()->get() as $round) {
             $round->createMatches($this->size/2);
         }
     }
 
+    /**
+     * Updates teams in every match in this fixture.
+     */
     public function updateMatches()
     {
         $max = $this->size-1;
-        $team = 1;
+        $team1 = 1;
         $team2 = $max;
         $roundNumber = 1;
-        $teams = $this->teams();
         foreach ($this->rounds as $round) {
             if(strstr($round->name,"Clasicos")){
                 $start1 = ($this->size/2)+1;
@@ -143,7 +149,7 @@ class Fixture extends Model
                 }
             } else {
                 foreach($round->matches as $match){
-                    $match->home_id = Team::where('order',$team)->where('fixture_id',$this->id)->first()->id;
+                    $match->home_id = Team::where('order',$team1)->where('fixture_id',$this->id)->first()->id;
                     if($match->order == 1){
                         if($roundNumber%2!=0)
                             $match->away_id = Team::where('order', $max+1)->where('fixture_id',$this->id)->first()->id;
@@ -156,7 +162,7 @@ class Fixture extends Model
                         $team2 = ($team2>1)?$team2-1:$max;
                     }
                     $match->save();
-                    $team = ($team<$max)?$team+1:1;
+                    $team1 = ($team1<$max)?$team1+1:1;
                 }
                 $roundNumber++;
             }
