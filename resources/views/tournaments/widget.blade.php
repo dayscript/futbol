@@ -139,18 +139,16 @@
         </select>
     </div>
 @elseif($tournament->id == "150945")
-    <div class="round_selector">
-        <select name="round" onchange="javascript:updateWidget(150945,this.options[this.selectedIndex].value);">
-            <option value="7632">Primera Fase/Ida</option>
-            <option value="7633">Primera Fase/Vuelta</option>
-            <option value="7634">Segunda fase/Ida</option>
-            <option value="7635">Segunda fase/Vuelta</option>
-            <option value="7662">Octavos de final/Octavos ida</option>
-            <option value="7663">Octavos de final/Octavos Vuelta</option>
-            <option selected="" value="7666">Cuartos de final/Cuartos ida</option>
-            <option value="7667">Cuartos de final/Cuartos vuelta</option>
-        </select>
-    </div>
+    <select name="round" onchange="javascript:updateWidget(150945,this.options[this.selectedIndex].value);">
+        <option value="7632">Primera Fase/Ida</option>
+        <option value="7633">Primera Fase/Vuelta</option>
+        <option value="7634">Segunda fase/Ida</option>
+        <option value="7635">Segunda fase/Vuelta</option>
+        <option value="7662">Octavos de final/Octavos ida</option>
+        <option value="7663">Octavos de final/Octavos Vuelta</option>
+        <option value="7666">Cuartos de final/Cuartos ida</option>
+        <option selected="" value="7667">Cuartos de final/Cuartos vuelta</option>
+    </select>
 @endif
 
 <?php $inidate = "";?>

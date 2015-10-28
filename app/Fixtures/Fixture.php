@@ -138,18 +138,18 @@ class Fixture extends Model
         $roundNumber = 1;
         foreach ($this->rounds as $round) {
             if(strstr($round->name,"Clasicos")){
-                $start1 = ($this->size/2)+1;
+                $start1 = 3*($this->size/4)+1;
                 $start2 = 1;
                 foreach($round->matches as $match){
-                    if($start1 == $this->size){
-                        $match->home_id = Team::where('order',$start1)->where('fixture_id',$this->id)->first()->id;
-                        $match->away_id = Team::where('order',$start2)->where('fixture_id',$this->id)->first()->id;
-                    } else {
+//                    if($start1 == $this->size){
+//                        $match->home_id = Team::where('order',$start1)->where('fixture_id',$this->id)->first()->id;
+//                        $match->away_id = Team::where('order',$start2)->where('fixture_id',$this->id)->first()->id;
+//                    } else {
                         $match->away_id = Team::where('order',$start1)->where('fixture_id',$this->id)->first()->id;
                         $match->home_id = Team::where('order',$start2)->where('fixture_id',$this->id)->first()->id;
-                    }
+//                    }
                     $match->save();
-                    $start1 = ($start1<$this->size)?$start1+1:1;
+                    $start1 = ($start1<$this->size)?$start1+1:($this->size/2)+1;
                     $start2 = ($start2<$this->size/2)?$start2+1:1;
                 }
             } else {
@@ -169,9 +169,9 @@ class Fixture extends Model
                     if( ($match->away->order - $match->home->order == 11)
                             || (($match->home->order == $this->size) && ($match->away->order==(1+$this->size/2)))
                     ){
-                        $temp = $match->home_id;
-                        $match->home_id = $match->away_id;
-                        $match->away_id = $temp;
+//                        $temp = $match->home_id;
+//                        $match->home_id = $match->away_id;
+//                        $match->away_id = $temp;
                     }
                     $match->save();
                     $team1 = ($team1<$max)?$team1+1:1;
