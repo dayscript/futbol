@@ -3,8 +3,8 @@
         <select name="round" onchange="javascript:updateWidget(150946,this.options[this.selectedIndex].value);">
             <option value="7638">Fase de grupos/Fecha 1</option>
             <option value="7639">Fase de grupos/Fecha 2</option>
-            <option selected value="7640">Fase de grupos/Fecha 3</option>
-            <option value="7641">Fase de grupos/Fecha 4</option>
+            <option value="7640">Fase de grupos/Fecha 3</option>
+            <option selected="" value="7641">Fase de grupos/Fecha 4</option>
             <option value="7642">Fase de grupos/Fecha 5</option>
             <option value="7643">Fase de grupos/Fecha 6</option>
         </select>
@@ -21,8 +21,8 @@
             <option value="7516">Todos contra todos/Fecha 7</option>
             <option value="7517">Todos contra todos/Fecha 8</option>
             <option value="7518">Todos contra todos/Fecha 9</option>
-            <option selected="" value="7519">Todos contra todos/Fecha 10</option>
-            <option value="7520">Todos contra todos/Fecha 11</option>
+            <option value="7519">Todos contra todos/Fecha 10</option>
+            <option selected="" value="7520">Todos contra todos/Fecha 11</option>
             <option value="7521">Todos contra todos/Fecha 12</option>
             <option value="7522">Todos contra todos/Fecha 13</option>
             <option value="7525">Todos contra todos/Fecha 14</option>
@@ -63,8 +63,8 @@
             <option value="7557">Todos contra todos/Fecha 6</option>
             <option value="7558">Todos contra todos/Fecha 7</option>
             <option value="7559">Todos contra todos/Fecha 8</option>
-            <option selected="" value="7560">Todos contra todos/Fecha 9</option>
-            <option value="7561">Todos contra todos/Fecha 10</option>
+            <option value="7560">Todos contra todos/Fecha 9</option>
+            <option selected="" value="7561">Todos contra todos/Fecha 10</option>
             <option value="7562">Todos contra todos/Fecha 11</option>
             <option value="7563">Todos contra todos/Fecha 12</option>
             <option value="7564">Todos contra todos/Fecha 13</option>
@@ -106,8 +106,8 @@
             <option value="7597">Todos contra todos/Fecha 6</option>
             <option value="7598">Todos contra todos/Fecha 7</option>
             <option value="7599">Todos contra todos/Fecha 8</option>
-            <option selected="" value="7600">Todos contra todos/Fecha 9</option>
-            <option value="7601">Todos contra todos/Fecha 10</option>
+            <option value="7600">Todos contra todos/Fecha 9</option>
+            <option selected="" value="7601">Todos contra todos/Fecha 10</option>
             <option value="7602">Todos contra todos/Fecha 11</option>
             <option value="7603">Todos contra todos/Fecha 12</option>
             <option value="7604">Todos contra todos/Fecha 13</option>
