@@ -38,9 +38,10 @@
                 </div>
                 <div class="card-block">
                     <p class="card-text"><strong>Próximo partido:</strong> <br>
-                    {{$nextmatch->home->name}} vs. {{$nextmatch->away->name}}<br>
-                        <small>{{$nextmatch->date}}</small><br>
-                    <small>ID: {{$nextmatch->id}}</small>
+                    {{--{{$nextmatch->home->name}} vs. {{$nextmatch->away->name}}<br>--}}
+                        {{--<small>{{$nextmatch->date}}</small><br>--}}
+                    {{--<small>ID: {{$nextmatch->id}}</small>--}}
+                    </p>
                 </div>
             </div>
         </div>
