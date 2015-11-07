@@ -54,7 +54,6 @@
     </div>
 @elseif($tournament->id == "150943")
     <div class="round_selector">
-        {{--Liga BBVA--}}
         <select name="round" onchange="javascript:updateWidget(150943,this.options[this.selectedIndex].value);">
             <option value="7552">Todos contra todos/Fecha 1</option>
             <option value="7553">Todos contra todos/Fecha 2</option>
