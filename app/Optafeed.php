@@ -1102,13 +1102,16 @@ class Optafeed extends Model
 
     public function updateGame($gameid,$options = [])
     {
+
         $tournament = $this->tournament();
         $game = Game::findOrNew($gameid);
         if (!$game->id) {
             $game->id = $gameid;
             Toastr::success($gameid,"Partido Opta Creado");
         }
+//        dd([$options,$gameid,$game->date]);
         $game->update($options);
+//        dd([$options,$gameid,$game->date]);
         if ($tournament) {
             $tournament->optagames()->save($game);
         }

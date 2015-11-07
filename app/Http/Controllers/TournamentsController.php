@@ -103,6 +103,7 @@ class TournamentsController extends Controller
     }
 
     public function updatewidget()
+
     {
         
     }
