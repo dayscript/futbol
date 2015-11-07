@@ -101,4 +101,9 @@ class TournamentsController extends Controller
             return redirect('tournaments');
         }
     }
+
+    public function updatewidget()
+    {
+        
+    }
 }
