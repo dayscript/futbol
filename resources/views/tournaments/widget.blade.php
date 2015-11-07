@@ -54,6 +54,7 @@
     </div>
 @elseif($tournament->id == "150943")
     <div class="round_selector">
+        {{--Liga BBVA--}}
         <select name="round" onchange="javascript:updateWidget(150943,this.options[this.selectedIndex].value);">
             <option value="7552">Todos contra todos/Fecha 1</option>
             <option value="7553">Todos contra todos/Fecha 2</option>
@@ -64,8 +65,8 @@
             <option value="7558">Todos contra todos/Fecha 7</option>
             <option value="7559">Todos contra todos/Fecha 8</option>
             <option value="7560">Todos contra todos/Fecha 9</option>
-            <option selected="" value="7561">Todos contra todos/Fecha 10</option>
-            <option value="7562">Todos contra todos/Fecha 11</option>
+            <option value="7561">Todos contra todos/Fecha 10</option>
+            <option selected="" value="7562">Todos contra todos/Fecha 11</option>
             <option value="7563">Todos contra todos/Fecha 12</option>
             <option value="7564">Todos contra todos/Fecha 13</option>
             <option value="7565">Todos contra todos/Fecha 14</option>
