@@ -4,8 +4,8 @@
             <option value="7638">Fase de grupos/Fecha 1</option>
             <option value="7639">Fase de grupos/Fecha 2</option>
             <option value="7640">Fase de grupos/Fecha 3</option>
-            <option selected="" value="7641">Fase de grupos/Fecha 4</option>
-            <option value="7642">Fase de grupos/Fecha 5</option>
+            <option value="7641">Fase de grupos/Fecha 4</option>
+            <option selected="" value="7642">Fase de grupos/Fecha 5</option>
             <option value="7643">Fase de grupos/Fecha 6</option>
         </select>
     </div>
@@ -23,8 +23,8 @@
             <option value="7518">Todos contra todos/Fecha 9</option>
             <option value="7519">Todos contra todos/Fecha 10</option>
             <option value="7520">Todos contra todos/Fecha 11</option>
-            <option selected="" value="7521">Todos contra todos/Fecha 12</option>
-            <option value="7522">Todos contra todos/Fecha 13</option>
+            <option value="7521">Todos contra todos/Fecha 12</option>
+            <option selected="" value="7522">Todos contra todos/Fecha 13</option>
             <option value="7525">Todos contra todos/Fecha 14</option>
             <option value="7526">Todos contra todos/Fecha 15</option>
             <option value="7527">Todos contra todos/Fecha 16</option>
@@ -65,8 +65,8 @@
             <option value="7559">Todos contra todos/Fecha 8</option>
             <option value="7560">Todos contra todos/Fecha 9</option>
             <option value="7561">Todos contra todos/Fecha 10</option>
-            <option selected="" value="7562">Todos contra todos/Fecha 11</option>
-            <option value="7563">Todos contra todos/Fecha 12</option>
+            <option value="7562">Todos contra todos/Fecha 11</option>
+            <option selected="" value="7563">Todos contra todos/Fecha 12</option>
             <option value="7564">Todos contra todos/Fecha 13</option>
             <option value="7565">Todos contra todos/Fecha 14</option>
             <option value="7566">Todos contra todos/Fecha 15</option>
@@ -109,8 +109,8 @@
             <option value="7600">Todos contra todos/Fecha 9</option>
             <option value="7601">Todos contra todos/Fecha 10</option>
             <option value="7602">Todos contra todos/Fecha 11</option>
-            <option selected="" value="7603">Todos contra todos/Fecha 12</option>
-            <option value="7604">Todos contra todos/Fecha 13</option>
+            <option value="7603">Todos contra todos/Fecha 12</option>
+            <option selected="" value="7604">Todos contra todos/Fecha 13</option>
             <option value="7605">Todos contra todos/Fecha 14</option>
             <option value="7606">Todos contra todos/Fecha 15</option>
             <option value="7607">Todos contra todos/Fecha 16</option>
