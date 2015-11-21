@@ -149,8 +149,8 @@
         <option value="7663">Octavos de final/Octavos Vuelta</option>
         <option value="7666">Cuartos de final/Cuartos ida</option>
         <option value="7667">Cuartos de final/Cuartos vuelta</option>
-        <option selected="" value="7674">Semifinales/Semifinal Ida</option>
-        <option value="7675">Semifinales/Semifinal Vuelta</option>
+        <option value="7674">Semifinales/Semifinal Ida</option>
+        <option selected="" value="7675">Semifinales/Semifinal Vuelta</option>
     </select>
     </div>
 @endif
