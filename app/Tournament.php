@@ -111,7 +111,7 @@ class Tournament extends Model
             Storage::disk('s3')->put('/resultswidget/150944_7604.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150944_7604.txt', 'public');
         } else if($this->id == "150943"){ //Liga BBVA
-            $dates = ["2015-11-21","2015-11-2","2015-11-23"];
+            $dates = ["2015-11-21","2015-11-22","2015-11-23"];
             $view = View::make('tournaments.widget',compact('tournament','dates'));
             $content = $view->render();
             Storage::disk('s3')->put('/resultswidget/150943_0.txt',$content);
