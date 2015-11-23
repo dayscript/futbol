@@ -115,6 +115,8 @@ class Tournament extends Model
             $dates = ["2015-11-06","2015-11-07","2015-11-08"];
             $view = View::make('tournaments.widget',compact('tournament','dates'));
             $content = $view->render();
+            Storage::disk('s3')->put('/resultswidget/150943_0.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150943_0.txt', 'public');
             Storage::disk('s3')->put('/resultswidget/150943_7562.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150943_7562.txt', 'public');
 
