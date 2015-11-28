@@ -79,13 +79,13 @@ class Tournament extends Model
     {
         $tournament = $this;
         if($this->id=="150946"){ // Champions
-            $dates = ["2015-11-24","2015-11-25"];
+            $dates = ["2015-12-08","2015-12-09"];
             $view = View::make('tournaments.widget',compact('tournament','dates'));
             $content = $view->render();
             Storage::disk('s3')->put('/resultswidget/150946_0.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150946_0.txt', 'public');
-            Storage::disk('s3')->put('/resultswidget/150946_7642.txt',$content);
-            Storage::disk('s3')->setVisibility('/resultswidget/150946_7642.txt', 'public');
+            Storage::disk('s3')->put('/resultswidget/150946_7643.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150946_7643.txt', 'public');
         } else if($this->id == "150945"){ //Sudamericana
             $dates = ["2015-11-25","2015-11-26"];
             $view = View::make('tournaments.widget',compact('tournament','dates'));
