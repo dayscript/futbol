@@ -120,13 +120,13 @@ class Tournament extends Model
 //            Storage::disk('s3')->put('/resultswidget/150943_7562.txt',$content);
 //            Storage::disk('s3')->setVisibility('/resultswidget/150943_7562.txt', 'public');
 
-            $dates = ["2015-11-21","2015-11-22","2015-11-23"];
+            $dates = ["2015-11-27","2015-11-28","2015-11-29"];
             $view = View::make('tournaments.widget',compact('tournament','dates'));
             $content = $view->render();
             Storage::disk('s3')->put('/resultswidget/150943_0.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150943_0.txt', 'public');
-            Storage::disk('s3')->put('/resultswidget/150943_7563.txt',$content);
-            Storage::disk('s3')->setVisibility('/resultswidget/150943_7563.txt', 'public');
+            Storage::disk('s3')->put('/resultswidget/150943_7564.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150943_7564.txt', 'public');
 
         }
     }
