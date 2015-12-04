@@ -151,8 +151,8 @@
             <option value="7667">Cuartos de final/Cuartos vuelta 2</option>
             <option value="7674">Semifinales/Semifinal Ida 1</option>
             <option value="7675">Semifinales/Semifinal Vuelta 2</option>
-            <option selected="" value="7678">Final /Final ida</option>
-            <option value="7679">Final /Final Vuelta</option>
+            <option value="7678">Final /Final ida</option>
+            <option selected="" value="7679">Final /Final Vuelta</option>
         </select>
     </div>
 
