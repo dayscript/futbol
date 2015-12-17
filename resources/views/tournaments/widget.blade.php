@@ -161,8 +161,8 @@
 
 <?php $inidate = "";?>
 @foreach($tournament->optagames as $game)
-    {{--(isset($matchday) && $matchday > 0 && $game->matchday == $matchday )||--}}
-    @if(
+
+    @if( (isset($matchday) && $matchday > 0 && $game->match_day == $matchday )||
         in_array(substr($game->date,0,10),$dates))
         @if($inidate != substr($game->date,0,10))
             <?php
@@ -198,7 +198,6 @@
             <div class="info-broad">
                 <div class="time">
                     <a class="" href="">
-                        {{$game->match_day}} {{$game->id}}
                         @if($game->period == "Half Time")
                             Medio Tiempo
                         @elseif($game->period == "First Half")
