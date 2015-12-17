@@ -27,8 +27,8 @@
             <option value="7522">Todos contra todos/Fecha 13</option>
             <option value="7525">Todos contra todos/Fecha 14</option>
             <option value="7526">Todos contra todos/Fecha 15</option>
-            <option selected="" value="7527">Todos contra todos/Fecha 16</option>
-            <option value="7528">Todos contra todos/Fecha 17</option>
+            <option value="7527">Todos contra todos/Fecha 16</option>
+            <option selected="" value="7528">Todos contra todos/Fecha 17</option>
             <option value="7529">Todos contra todos/Fecha 18</option>
             <option value="7530">Todos contra todos/Fecha 19</option>
             <option value="7531">Todos contra todos/Fecha 20</option>
@@ -161,7 +161,8 @@
 
 <?php $inidate = "";?>
 @foreach($tournament->optagames as $game)
-    @if(in_array(substr($game->date,0,10),$dates))
+    @if( (isset($matchday) && $matchday > 0 && $game->matchday == $matchday )||
+        in_array(substr($game->date,0,10),$dates))
         @if($inidate != substr($game->date,0,10))
             <?php
             $inidate = substr($game->date, 0, 10);
