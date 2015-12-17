@@ -95,7 +95,7 @@ class Tournament extends Model
             Storage::disk('s3')->put('/resultswidget/150945_7679.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150945_7679.txt', 'public');
         } else if($this->id == "150942"){ // Premier
-            $dates = ["2015-12-19","2015-12-20","2015-12-21"];
+            $dates = [];
             $matchday = 17;
             $view = View::make('tournaments.widget',compact('tournament','dates','matchday'));
             $content = $view->render();
