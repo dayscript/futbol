@@ -198,7 +198,7 @@
             <div class="info-broad">
                 <div class="time">
                     <a class="" href="">
-                        {{$game->matchday}}
+                        {{$game->matchday}} {{$game->id}}
                         @if($game->period == "Half Time")
                             Medio Tiempo
                         @elseif($game->period == "First Half")
