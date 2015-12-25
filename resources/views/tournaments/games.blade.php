@@ -25,6 +25,7 @@
                 <td>{{$game->id}}</td>
                 <td>{{$game->date}}<br>
                     <small>{{$game->round_type}}: {{$game->round_number}}</small>
+                    <small>Día: {{$game->match_day}}</small>
                 </td>
                 <td class="row">
                     <div class="col-md-5 text-right">{{($game->home)?$game->home->name:""}}</div>
