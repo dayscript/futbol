@@ -96,13 +96,13 @@ class Tournament extends Model
             Storage::disk('s3')->setVisibility('/resultswidget/150945_7679.txt', 'public');
         } else if($this->id == "150942"){ // Premier
             $dates = [];
-            $matchday = 17;
+            $matchday = 18;
             $view = View::make('tournaments.widget',compact('tournament','dates','matchday'));
             $content = $view->render();
             Storage::disk('s3')->put('/resultswidget/150942_0.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150942_0.txt', 'public');
-            Storage::disk('s3')->put('/resultswidget/150942_7528.txt',$content);
-            Storage::disk('s3')->setVisibility('/resultswidget/150942_7528.txt', 'public');
+            Storage::disk('s3')->put('/resultswidget/150942_7529.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150942_7529.txt', 'public');
         } else if($this->id == "150944"){ //Serie A
             $dates = [];
             $matchday = 18;
