@@ -105,7 +105,7 @@ class Tournament extends Model
             Storage::disk('s3')->setVisibility('/resultswidget/150942_7533.txt', 'public');
         } else if($this->id == "150944"){ //Serie A
             $dates = [];
-            $matchday = 20;
+            $matchday = 21;
             $view = View::make('tournaments.widget',compact('tournament','dates','matchday'));
             $content = $view->render();
             Storage::disk('s3')->put('/resultswidget/150944_0.txt',$content);

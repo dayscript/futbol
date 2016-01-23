@@ -117,8 +117,8 @@
             <option value="7608">Todos contra todos/Fecha 17</option>
             <option value="7609">Todos contra todos/Fecha 18</option>
             <option value="7610">Todos contra todos/Fecha 19</option>
-            <option selected="" value="7611">Todos contra todos/Fecha 20</option>
-            <option value="7612">Todos contra todos/Fecha 21</option>
+            <option value="7611">Todos contra todos/Fecha 20</option>
+            <option selected="" value="7612">Todos contra todos/Fecha 21</option>
             <option value="7613">Todos contra todos/Fecha 22</option>
             <option value="7614">Todos contra todos/Fecha 23</option>
             <option value="7615">Todos contra todos/Fecha 24</option>
