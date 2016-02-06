@@ -6,7 +6,8 @@
             <option value="7640">Fase de grupos/Fecha 3</option>
             <option value="7641">Fase de grupos/Fecha 4</option>
             <option value="7642">Fase de grupos/Fecha 5</option>
-            <option selected="" value="7643">Fase de grupos/Fecha 6</option>
+            <option selected="" value="7686">Octavos de final/Octavos ida</option>
+            <option value="7687">Octavos de final/Octavos vuelta</option>
         </select>
     </div>
 @elseif($tournament->id == "150942")
