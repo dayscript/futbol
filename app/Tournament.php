@@ -105,22 +105,22 @@ class Tournament extends Model
             Storage::disk('s3')->setVisibility('/resultswidget/150942_7535.txt', 'public');
         } else if($this->id == "150944"){ //Serie A
             $dates = [];
-            $matchday = 22;
+            $matchday = 24;
             $view = View::make('tournaments.widget',compact('tournament','dates','matchday'));
             $content = $view->render();
             Storage::disk('s3')->put('/resultswidget/150944_0.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150944_0.txt', 'public');
-            Storage::disk('s3')->put('/resultswidget/150944_7613.txt',$content);
-            Storage::disk('s3')->setVisibility('/resultswidget/150944_7613.txt', 'public');
+            Storage::disk('s3')->put('/resultswidget/150944_7614.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150944_7614.txt', 'public');
         } else if($this->id == "150943"){ //Liga BBVA
             $dates = [];
-            $matchday = 22;
+            $matchday = 23;
             $view = View::make('tournaments.widget',compact('tournament','dates','matchday'));
             $content = $view->render();
             Storage::disk('s3')->put('/resultswidget/150943_0.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150943_0.txt', 'public');
-            Storage::disk('s3')->put('/resultswidget/150943_7573.txt',$content);
-            Storage::disk('s3')->setVisibility('/resultswidget/150943_7573.txt', 'public');
+            Storage::disk('s3')->put('/resultswidget/150943_7574.txt',$content);
+            Storage::disk('s3')->setVisibility('/resultswidget/150943_7574.txt', 'public');
 
         }
     }
