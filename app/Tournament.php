@@ -115,12 +115,12 @@ class Tournament extends Model
             Storage::disk('s3')->setVisibility('/resultswidget/150944_7614.txt', 'public');
         } else if($this->id == "150943"){ //Liga BBVA
             $dates = [];
-            $matchday = 23;
+            $matchday = 24;
             $view = View::make('tournaments.widget',compact('tournament','dates','matchday'));
             $content = $view->render();
             Storage::disk('s3')->put('/resultswidget/150943_0.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150943_0.txt', 'public');
-            Storage::disk('s3')->put('/resultswidget/150943_7574.txt',$content);
+            Storage::disk('s3')->put('/resultswidget/150943_7575.txt',$content);
             Storage::disk('s3')->setVisibility('/resultswidget/150943_7574.txt', 'public');
 
         }
