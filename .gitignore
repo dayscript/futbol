@@ -5,3 +5,6 @@ Homestead.json
 .env
 /bower_components
 .idea
+
+.tar.gz
+.sql
